@@ -27,7 +27,7 @@ typedef struct fbuf
 	size_t pos;
 	size_t flag;
 	struct fbuf *next;
-}file_buf;
+} file_buf;
 
 /*Prototypes*/
 char *_getline(const int fd);
