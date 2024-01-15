@@ -8,7 +8,7 @@
 
 void race_state(int *id, size_t size)
 {
-	cars_t *cars;
+	static cars_t *cars;
 
 	if (!id || size == 0)
 	{
