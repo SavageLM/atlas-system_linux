@@ -40,7 +40,7 @@ file_buf *node_find(file_buf **list, int fd)
 			return (tmp);
 		}
 	if (!found)
-		tmp = add_file(list, fd);
+		tmp = add_node(list, fd);
 	return (tmp);
 }
 
