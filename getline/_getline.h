@@ -26,7 +26,7 @@ typedef struct fbuf
 	ssize_t buff_bytes;
 	size_t pos;
 	size_t flag;
-	struct file_buffer *next;
+	struct fbuf *next;
 }file_buf;
 
 /*Prototypes*/
