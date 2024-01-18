@@ -16,7 +16,7 @@ void race_state(int *id, size_t size)
 		free_cars(&cars);
 	}
 
-	for (; i < size; i++)
+	for (; i != size; i++)
 	{
 		if (!check_ids(id[i], &cars))
 		{
@@ -60,7 +60,10 @@ int check_ids(int id, cars_t **cars)
 {
 	cars_t *tmp = *cars;
 
-	for (; tmp->next != NULL; tmp = tmp->next)
+	if (!cars)
+		return (0);
+
+	for (; tmp; tmp = tmp->next)
 	{
 		if (id == tmp->id)
 		{
@@ -80,7 +83,7 @@ int check_ids(int id, cars_t **cars)
 
 void new_car(int id, cars_t **cars)
 {
-	cars_t *newcar, *prev, *tmp = *cars;
+	cars_t *newcar = NULL, *prev = NULL, *tmp = *cars;
 
 	newcar = malloc(sizeof(cars_t));
 	if (!newcar)
@@ -91,34 +94,40 @@ void new_car(int id, cars_t **cars)
 	newcar->id = id;
 	newcar->laps = 0;
 
-	if (tmp == NULL)
+	if (!*cars)
 	{
 		*cars = newcar;
 		newcar->next = NULL;
+		return;
 	}
 	else if (tmp->id > id)
 	{
 		*cars = newcar;
 		newcar->next = tmp;
+		return;
 	}
 
-	while (tmp->next != NULL)
+	else
 	{
-		if (tmp->id < id)
+		while (tmp)
 		{
-			prev = tmp;
-			tmp = tmp->next;
+			if (tmp->id < id)
+			{
+				prev = tmp;
+				tmp = tmp->next;
+			}
+			else if (tmp->id > id)
+			{
+				prev->next = newcar;
+				newcar->next = tmp;
+				return;
+			}
 		}
-		else if (tmp->id > id)
-		{
-			prev->next = newcar;
-			newcar->next = tmp;
-			return;
-		}
-	}
 
-	tmp->next = newcar;
-	newcar->next = NULL;
+		tmp->next = newcar;
+		newcar->next = NULL;
+		return;
+	}
 }
 
 /**
