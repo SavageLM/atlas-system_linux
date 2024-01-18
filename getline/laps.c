@@ -14,6 +14,7 @@ void race_state(int *id, size_t size)
 	if (!id || size == 0)
 	{
 		free_cars(&cars);
+		return;
 	}
 
 	for (; i != size; i++)
