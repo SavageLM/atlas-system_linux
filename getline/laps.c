@@ -146,6 +146,6 @@ void print_state(cars_t *cars)
 	{
 		car_id = tmp->id;
 		laps = tmp->laps;
-		printf("Car %d [%d]", car_id, laps);
+		printf("Car %d [%d]\n", car_id, laps);
 	}
 }
