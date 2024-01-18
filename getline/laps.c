@@ -94,7 +94,6 @@ void new_car(int id, cars_t **cars)
 	}
 	newcar->id = id;
 	newcar->laps = 0;
-
 	if (!*cars)
 	{
 		*cars = newcar;
@@ -121,13 +120,11 @@ void new_car(int id, cars_t **cars)
 			{
 				prev->next = newcar;
 				newcar->next = tmp;
-				return;
 			}
 			else if (tmp->next == NULL)
 			{
 				tmp->next = newcar;
 				newcar->next = NULL;
-				return;
 			}
 		}
 	}
@@ -143,7 +140,7 @@ void print_state(cars_t *cars)
 	cars_t *tmp = cars;
 	int car_id = 0, laps = 0;
 
-	printf("Race state:");
+	printf("Race state:\n");
 
 	for (; tmp; tmp = tmp->next)
 	{
