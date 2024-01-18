@@ -61,9 +61,6 @@ int check_ids(int id, cars_t **cars)
 {
 	cars_t *tmp = *cars;
 
-	if (!cars)
-		return (0);
-
 	for (; tmp; tmp = tmp->next)
 	{
 		if (id == tmp->id)
@@ -146,6 +143,6 @@ void print_state(cars_t *cars)
 	{
 		car_id = tmp->id;
 		laps = tmp->laps;
-		printf("Car %d [%d]\n", car_id, laps);
+		printf("Car %d [%d laps]\n", car_id, laps);
 	}
 }
