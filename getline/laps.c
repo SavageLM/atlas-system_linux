@@ -21,7 +21,7 @@ void race_state(int *id, size_t size)
 		if (!check_ids(id[i], &cars))
 		{
 			new_car(id[i], &cars);
-			printf("Car %d joinded the race", id[i]);
+			printf("Car %d joined the race\n", id[i]);
 		}
 	}
 	print_state(cars);
@@ -122,11 +122,13 @@ void new_car(int id, cars_t **cars)
 				newcar->next = tmp;
 				return;
 			}
+			else if (tmp->next == NULL)
+			{
+				tmp->next = newcar;
+				newcar->next = NULL;
+				return;
+			}
 		}
-
-		tmp->next = newcar;
-		newcar->next = NULL;
-		return;
 	}
 }
 
@@ -142,7 +144,7 @@ void print_state(cars_t *cars)
 
 	printf("Race state:");
 
-	for (; tmp->next != NULL; tmp = tmp->next)
+	for (; tmp; tmp = tmp->next)
 	{
 		car_id = tmp->id;
 		laps = tmp->laps;
