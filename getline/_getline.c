@@ -12,6 +12,22 @@ char *_getline(const int fd)
 	file_buf *file = NULL;
 	char *line = NULL;
 
+	if (fd == -1)
+	{
+		if (!list)
+			return (NULL);
+		else if (list->next)
+			for (; list; list = file)
+			{
+				file = list->next;
+				if (list->buffer)
+					free(list->buffer), list->buffer = NULL;
+				free(list);
+			}
+			free(list), list = NULL;
+			return (NULL);
+	}
+
 	file = node_find(&list, fd);
 	if (!file)
 		return (NULL);

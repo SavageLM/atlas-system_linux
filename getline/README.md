@@ -30,6 +30,8 @@
 |----------|----------------:|
 |laps.c| Source code for tracking cars and laps mabe by car|
 |laps.h| Header file for Source file|
+|_getline.c| Source code for reading from a file using a buffer|
+|_getline.h| Header file for Source code|
 
 #### Authors
 Logan Savage

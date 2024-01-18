@@ -9,24 +9,21 @@
 void race_state(int *id, size_t size)
 {
 	static cars_t *cars;
+	size_t i = 0;
 
 	if (!id || size == 0)
 	{
-		printf("Entering free_cars");
 		free_cars(&cars);
 	}
 
-	printf("Entering ID check loop");
-	for (size_t i = 0; i < size; i++)
+	for (; i < size; i++)
 	{
 		if (!check_ids(id[i], &cars))
 		{
-			printf("entering new_car");
 			new_car(id[i], &cars);
 			printf("Car %d joinded the race", id[i]);
 		}
 	}
-	printf("Entering print_state");
 	print_state(cars);
 }
 
