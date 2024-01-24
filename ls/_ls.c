@@ -65,7 +65,7 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A)
 
 	if (!dh)
 	{
-		if (errno = ENOENT)
+		if (errno == ENOENT)
 			perror("./hls: ");
 		else
 			perror("Unable to read directory");
