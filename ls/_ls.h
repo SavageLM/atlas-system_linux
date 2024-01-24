@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <dirent.h>
 #include <errno.h>
+#include <sys/stat.h>
 
 #define IS_CURRENT_DIR(s) \
 		((s)[0] == '.' && !(s)[1])

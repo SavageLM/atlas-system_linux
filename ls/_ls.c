@@ -20,7 +20,7 @@ int main(int argc, const char *argv[])
 
 	else if (argc > 1)
 	{
-		for (; j <= argc; j++)
+		for (; j < argc; j++)
 		{
 			if (argv[j][0] == '-')
 			{
@@ -52,6 +52,8 @@ int main(int argc, const char *argv[])
 			tmp = tmp->next;
 		}
 	}
+	if (!flag_1 && !flag_l)
+		printf("\n");
 	return (0);
 }
 
@@ -67,15 +69,21 @@ int main(int argc, const char *argv[])
 void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A)
 {
 	struct dirent *res;
+	struct stat info;
 	DIR *dh = opendir(dir);
 
 	if (!dh)
 	{
-		if (errno == ENOENT)
-			perror("./hls: ");
+		if (lstat(dir, &info) == 0)
+		{
+			printf("%s ", dir);
+			return;
+		}
 		else
-			perror("Unable to read directory");
-		exit(EXIT_FAILURE);
+		{
+			perror("./hls");
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	while ((res = readdir(dh)))
@@ -132,7 +140,10 @@ void addnode(const char *filename, file_list **flist)
 		while (tmp)
 		{
 			if (tmp->next == NULL)
+			{
 				tmp->next = newf;
+				return;
+			}
 			tmp = tmp->next;
 		}
 	}
