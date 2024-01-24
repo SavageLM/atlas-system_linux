@@ -98,5 +98,5 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A)
 		if (flag_1)
 			printf("\n");
 	}
-	closedir(dir);
+	closedir(dh);
 }
