@@ -4,7 +4,7 @@
  * main- Entry into the function
  * @argc: count of arguments
  * @argv: array of arguments
- * Returns: Always 0
+ * Return: Always 0
 */
 
 int main(int argc, const char *argv[])
