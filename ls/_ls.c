@@ -1,4 +1,5 @@
 #include "_ls.h"
+#include "_str.h"
 
 /**
  * main- Entry into the function
@@ -9,8 +10,8 @@
 
 int main(int argc, const char *argv[])
 {
+	static file_list *flist;
 	int flag_1 = 0, flag_a = 0, flag_l = 0, flag_A = 0, i = 1, j = 1;
-	const char *file_name;
 
 	if (argc == 1)
 	{
@@ -42,9 +43,14 @@ int main(int argc, const char *argv[])
 				}
 			}
 			else
-				file_name = argv[j];
+				addnode(argv[j], &flist);
 		}
-		new_ls(file_name, flag_a, flag_l, flag_1, flag_A);
+		file_list *tmp = flist;
+		while (tmp)
+		{
+			new_ls(tmp->name, flag_a, flag_l, flag_1, flag_A);
+			tmp = tmp->next;
+		}
 	}
 	return (0);
 }
@@ -81,9 +87,9 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A)
 		}
 		else if (flag_A)
 		{
-			if (res->d_name[0] == '.' && res->d_name[1] == '\0')
+			if (IS_CURRENT_DIR(res->d_name))
 				continue;
-			else if (res->d_name[1] == '.' && res->d_name[2] == '\0')
+			else if (IS_PARENT_DIR(res->d_name))
 				continue;
 			printf("%s ", res->d_name);
 		}
@@ -99,4 +105,35 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A)
 			printf("\n");
 	}
 	closedir(dh);
+}
+
+/**
+ * addnode - file for adding a node to a list
+ * @filename: Name of file or directory
+ * @flist: list of files
+*/
+
+void addnode(const char *filename, file_list **flist)
+{
+	file_list *newf = NULL, *tmp = *flist;
+	char *fn_copy;
+
+	fn_copy = _strdup(filename);
+
+	newf = malloc(sizeof(file_list));
+	if (!newf)
+		return;
+	newf->name = fn_copy;
+	newf->next = NULL;
+	if (!*flist)
+		*flist = newf;
+	else
+	{
+		while (tmp)
+		{
+			if (tmp->next == NULL)
+				tmp->next = newf;
+			tmp = tmp->next;
+		}
+	}
 }
