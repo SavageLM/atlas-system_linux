@@ -1,4 +1,5 @@
 #include "_str.h"
+#include "_ls.h"
 
 /**
  * _strdup- entry to function
@@ -72,4 +73,25 @@ char *_strcat(char *dest, char *src)
 	dest[c] = '\0';
 
 	return (dest);
+}
+
+/**
+ * free_list - Function to free a list of files
+ * @files: list to free
+*/
+void free_list(file_list **files)
+{
+	file_list *tmp = *files;
+
+	if (!*files)
+		return;
+
+	while (*files)
+	{
+		tmp = (*files)->next;
+		free(*files);
+		*files = tmp;
+	}
+	free(*files);
+	*files = NULL;
 }

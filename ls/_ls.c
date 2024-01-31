@@ -43,6 +43,7 @@ int main(int argc, const char *argv[])
 			new_ls(tmp->name, flag_a, flag_l, flag_1, flag_A, count);
 			tmp = tmp->next;
 		}
+		free_list(&flist);
 	}
 	if (!flag_1 && !flag_l)
 		printf("\n");
