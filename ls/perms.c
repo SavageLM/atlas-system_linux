@@ -70,7 +70,7 @@ void other_perms(mode_t mode)
 		printf("-");
 	
 	if (mode & S_IXOTH)
-		printf("x");
+		printf("x ");
 	else
 		printf("- ");
 }
