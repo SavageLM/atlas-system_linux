@@ -204,7 +204,7 @@ void l_option(const char *dir, char *filename)
 		usr_perms(info.st_mode);
 		grp_perms(info.st_mode);
 		other_perms(info.st_mode);
-		printf("%ld", info.st_nlink);
+		printf("%ld ", info.st_nlink);
 		user_id = getpwuid(info.st_uid);
 		if (user_id)
 			printf("%s ", user_id->pw_name);
