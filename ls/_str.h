@@ -7,5 +7,6 @@
 /** Prototypes */
 int _strlen(const char *s);
 char *_strdup(const char *str);
+char *_strcat(char *dest, char *src);
 
 #endif

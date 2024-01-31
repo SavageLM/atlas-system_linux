@@ -6,6 +6,12 @@
 #include <dirent.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <grp.h>
+#include <pwd.h>
+#include <time.h>
+#include <unistd.h>
+
 
 #define IS_CURRENT_DIR(s) \
 		((s)[0] == '.' && !(s)[1])
@@ -28,8 +34,9 @@ typedef struct flist
 
 /** Prototypes */
 int main(int argc, const char *argv[]);
-void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A);
+void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int count);
 void addnode(const char *filename, file_list **flist);
 void flag_checker(int argc, const char *argv[]);
+void l_option(const char *dir, char *filename);
 
 #endif

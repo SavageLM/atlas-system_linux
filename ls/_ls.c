@@ -1,5 +1,6 @@
 #include "_ls.h"
 #include "_str.h"
+#include "perms.h"
 
 int flag_1 = 0, flag_a = 0, flag_l = 0, flag_A = 0;
 
@@ -13,16 +14,16 @@ int flag_1 = 0, flag_a = 0, flag_l = 0, flag_A = 0;
 int main(int argc, const char *argv[])
 {
 	static file_list *flist, *tmp;
-	int i = 1;
+	int i = 1, count = 0;
 
 	if (argc == 1)
 	{
-		new_ls(".", 0, 0, 0, 0);
+		new_ls(".", 0, 0, 0, 0, 0);
 	}
 	else if (argc == 2 && argv[1][0] == '-')
 	{
 		flag_checker(argc, argv);
-		new_ls(".", flag_a, flag_l, flag_1, flag_A);
+		new_ls(".", flag_a, flag_l, flag_1, flag_A, count);
 	}
 	else if (argc > 2)
 	{
@@ -31,12 +32,15 @@ int main(int argc, const char *argv[])
 			if (argv[i][0] == '-')
 				flag_checker(argc, argv);
 			else
+			{
 				addnode(argv[i], &flist);
+				count++;
+			}
 		}
 		tmp = flist;
 		while (tmp)
 		{
-			new_ls(tmp->name, flag_a, flag_l, flag_1, flag_A);
+			new_ls(tmp->name, flag_a, flag_l, flag_1, flag_A, count);
 			tmp = tmp->next;
 		}
 	}
@@ -54,8 +58,9 @@ int main(int argc, const char *argv[])
  * @flag_A: optional flag for amlmost all files
 */
 
-void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A)
+void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int count)
 {
+	int p_flag = 0;
 	struct dirent *res;
 	struct stat info;
 	DIR *dh = opendir(dir);
@@ -73,30 +78,37 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A)
 			exit(EXIT_FAILURE);
 		}
 	}
-
+	if (count > 1)
+		printf("%s:\n", dir);
 	while ((res = readdir(dh)))
 	{
-		if (flag_l)
-		{
-			continue;
-			/** Added in code for -l later*/
-		}
-		else if (flag_A)
+		if (flag_A)
 		{
 			if (IS_CURRENT_DIR(res->d_name))
 				continue;
 			else if (IS_PARENT_DIR(res->d_name))
 				continue;
-			printf("%s ", res->d_name);
+			if (flag_l)
+				l_option(dir, res->d_name);
+			else
+				print_flag(res->d_name, p_flag);
 		}
 		else if (!flag_a)
 		{
 			if (res->d_name[0] == '.')
 				continue;
-			printf("%s ", res->d_name);
+			if (flag_l)
+				l_option(dir, res->d_name);
+			else
+				print_flag(res->d_name, p_flag);
 		}
 		else
-			printf("%s ", res->d_name);
+			{
+				if (flag_l)
+					l_option(dir, res->d_name);
+				else
+					print_flag(res->d_name, p_flag);
+			}
 		if (flag_1)
 			printf("\n");
 	}
@@ -170,4 +182,43 @@ void flag_checker(int argc, const char *argv[])
 				}
 			}
 		}
+}
+
+/**
+ * l_option -  Function for handling the -l option
+ * @dir: Directory handed in
+ * @filename: file name passed in by dirent object
+*/
+
+void l_option(const char *dir, char *filename)
+{
+	struct stat info;
+	struct passwd *user_id;
+	struct group *group_id;
+	char *time, *path = NULL;
+
+	path = make_path(dir, filename);
+
+	if (!lstat(path, &info))
+	{
+		usr_perms(info.st_mode);
+		grp_perms(info.st_mode);
+		other_perms(info.st_mode);
+		printf("%ld", info.st_nlink);
+		user_id = getpwuid(info.st_uid);
+		if (user_id)
+			printf("%s ", user_id->pw_name);
+		else
+			printf("%d ", info.st_uid);
+		group_id = getgrgid(info.st_gid);
+		if (group_id)
+			printf("%s ", group_id->gr_name);
+		else
+			printf("%d ", info.st_gid);
+		printf("%ld ", info.st_size);
+		time = ctime(&(info.st_mtime));
+		printf("%.12s %s\n", &time[4], filename);
+	}
+	free(path);
+	path = NULL;
 }
