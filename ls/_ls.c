@@ -29,7 +29,7 @@ int main(int argc, const char *argv[])
 		for (; i < argc; i++)
 		{
 			if (argv[i][0] == '-')
-				flag_checker(argv);
+				flag_checker(argv[1]);
 			else
 				addnode(argv[i], &flist);
 		}
