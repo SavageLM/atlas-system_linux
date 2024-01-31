@@ -30,6 +30,6 @@ typedef struct flist
 int main(int argc, const char *argv[]);
 void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A);
 void addnode(const char *filename, file_list **flist);
-void flag_checker(const char *argv[]);
+void flag_checker(int argc, const char *argv[]);
 
 #endif
