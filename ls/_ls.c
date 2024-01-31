@@ -1,6 +1,8 @@
 #include "_ls.h"
 #include "_str.h"
 
+int flag_1 = 0, flag_a = 0, flag_l = 0, flag_A = 0;
+
 /**
  * main- Entry into the function
  * @argc: count of arguments
@@ -10,42 +12,28 @@
 
 int main(int argc, const char *argv[])
 {
-	static file_list *flist;
-	int flag_1 = 0, flag_a = 0, flag_l = 0, flag_A = 0, i = 1, j = 1;
+	static file_list *flist, *tmp;
+	int i = 1;
 
 	if (argc == 1)
 	{
 		new_ls(".", 0, 0, 0, 0);
 	}
-
-	else if (argc > 1)
+	else if (argc == 2 && argv[1][0] == '-')
 	{
-		for (; j < argc; j++)
+		flag_checker(argv);
+		new_ls(".", flag_a, flag_l, flag_1, flag_A);
+	}
+	else if (argc > 2)
+	{
+		for (; i < argc; i++)
 		{
-			if (argv[j][0] == '-')
-			{
-				for (; argv[j][i] != '\0'; i++)
-				{
-					if (argv[j][i] == 1)
-						flag_1 = 1;
-					else if (argv[j][i] == 'l')
-						flag_l = 1;
-					else if (argv[j][i] == 'a')
-						flag_a = 1;
-					else if (argv[j][i] == 'A')
-						flag_A = 1;
-					else if (argv[j][i] == '1')
-						flag_1 = 1;
-					else
-					{
-						perror("./hls: Option not supported");
-					}
-				}
-			}
+			if (argv[i][0] == '-')
+				flag_checker(argv);
 			else
-				addnode(argv[j], &flist);
+				addnode(argv[i], &flist);
 		}
-		file_list *tmp = flist;
+		tmp = flist;
 		while (tmp)
 		{
 			new_ls(tmp->name, flag_a, flag_l, flag_1, flag_A);
@@ -145,6 +133,34 @@ void addnode(const char *filename, file_list **flist)
 				return;
 			}
 			tmp = tmp->next;
+		}
+	}
+}
+
+/**
+ * flag_checker - Function to parse argv for flags
+ * @argv: array of arguments
+*/
+
+void flag_checker(const char *argv[])
+{
+	int j = 1, i = 1;
+
+	for (; argv[j][i] != '\0'; i++)
+	{
+		if (argv[j][i] == 1)
+			flag_1 = 1;
+		else if (argv[j][i] == 'l')
+			flag_l = 1;
+		else if (argv[j][i] == 'a')
+			flag_a = 1;
+		else if (argv[j][i] == 'A')
+			flag_A = 1;
+		else if (argv[j][i] == '1')
+			flag_1 = 1;
+		else
+		{
+			perror("./hls: Option not supported");
 		}
 	}
 }
