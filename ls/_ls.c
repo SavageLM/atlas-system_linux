@@ -93,6 +93,7 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int
 				l_option(dir, res->d_name);
 			else
 				print_flag(res->d_name, p_flag);
+				p_flag = 1;
 		}
 		else if (!flag_a)
 		{
@@ -102,6 +103,7 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int
 				l_option(dir, res->d_name);
 			else
 				print_flag(res->d_name, p_flag);
+				p_flag = 1;
 		}
 		else
 			{
@@ -109,6 +111,7 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int
 					l_option(dir, res->d_name);
 				else
 					print_flag(res->d_name, p_flag);
+					p_flag = 1;
 			}
 		if (flag_1)
 			printf("\n");
