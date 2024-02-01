@@ -74,7 +74,8 @@ int main(int argc, const char *argv[])
 
 int new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int count)
 {
-	int p_flag = 0, d_flag = 0;
+	int p_flag = 0;
+	static int d_flag = 0;
 	struct dirent *res;
 	struct stat info;
 	DIR *dh = opendir(dir);
