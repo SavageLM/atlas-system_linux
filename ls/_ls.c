@@ -24,10 +24,16 @@ int main(int argc, const char *argv[])
 		if (argv[1][0] == '-')
 		{
 			flag_checker(argc, argv);
-			new_ls(".", flag_a, flag_l, flag_1, flag_A, count);
+			err_catch = new_ls(".", flag_a, flag_l, flag_1, flag_A, count);
+			if (err_catch)
+				print_error(argv[0], ".", err_catch);
 		}
 		else
-			new_ls(argv[1], 0, 0, 0, 0, 0);
+		{
+			err_catch = new_ls(argv[1], 0, 0, 0, 0, 0);
+			if (err_catch)
+				print_error(argv[0], argv[1], err_catch);
+		}
 	}
 	else if (argc > 2)
 	{
@@ -45,8 +51,6 @@ int main(int argc, const char *argv[])
 		while (tmp)
 		{
 			err_catch = new_ls(tmp->name, flag_a, flag_l, flag_1, flag_A, count);
-			printf("HERE");
-			printf("%d is error\n", err_catch);
 			if (err_catch)
 				print_error(argv[0], tmp->name, err_catch);
 			tmp = tmp->next;
@@ -83,7 +87,7 @@ int new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int 
 			return (0);
 		}
 		else
-			return (errno);
+			return (2);
 	}
 	if (count > 1)
 	{
@@ -142,16 +146,12 @@ int new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int 
 void addnode(const char *filename, file_list **flist)
 {
 	file_list *newf = NULL, *tmp = *flist;
-	/*
-	fn_copy = malloc(_strlen(filename) + 1);
-	_strncpy(fn_copy, filename, _strlen(filename) + 1);
-*/
+
 	newf = malloc(sizeof(file_list));
 	newf->name = malloc(_strlen(filename) + 1);
 	if (!newf)
 		return;
-	_strncpy(newf->name, filename, _strlen(filename) + 1);;
-
+	_strncpy(newf->name, filename, _strlen(filename) + 1);
 	newf->next = NULL;
 	if (!*flist)
 		*flist = newf;
@@ -180,28 +180,28 @@ void flag_checker(int argc, const char *argv[])
 	int j = 1, i = 1;
 
 	for (; j < argc; j++)
+	{
+		if (argv[j][0] == '-')
 		{
-			if (argv[j][0] == '-')
+			for (; argv[j][i] != '\0'; i++)
 			{
-				for (; argv[j][i] != '\0'; i++)
+				if (argv[j][i] == 1)
+					flag_1 = 1;
+				else if (argv[j][i] == 'l')
+					flag_l = 1;
+				else if (argv[j][i] == 'a')
+					flag_a = 1;
+				else if (argv[j][i] == 'A')
+					flag_A = 1;
+				else if (argv[j][i] == '1')
+					flag_1 = 1;
+				else
 				{
-					if (argv[j][i] == 1)
-						flag_1 = 1;
-					else if (argv[j][i] == 'l')
-						flag_l = 1;
-					else if (argv[j][i] == 'a')
-						flag_a = 1;
-					else if (argv[j][i] == 'A')
-						flag_A = 1;
-					else if (argv[j][i] == '1')
-						flag_1 = 1;
-					else
-					{
-						perror("./hls: Option not supported");
-					}
+					perror("./hls: Option not supported");
 				}
 			}
 		}
+	}
 }
 
 /**
