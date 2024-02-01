@@ -44,7 +44,6 @@ void dirprint_flag(const char* file, int d_flag)
 
 void print_error(const char* prog, const char* file, int error)
 {
-	printf("entering print_error");
 	if (error == 2)
 		fprintf(
 			stderr,

@@ -87,7 +87,7 @@ int new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int 
 			return (0);
 		}
 		else
-			return (2);
+			return (errno);
 	}
 	if (count > 1)
 	{
