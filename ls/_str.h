@@ -10,5 +10,6 @@ int _strlen(const char *s);
 char *_strdup(const char *str);
 char *_strcat(char *dest, char *src);
 void free_list(file_list **files);
+char *_strncpy(char *dest, const char *src, int n);
 
 #endif

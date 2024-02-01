@@ -1,32 +1,4 @@
 #include "_str.h"
-#include "_ls.h"
-
-/**
- * _strdup- entry to function
- * @str: str to copy
- * Return: returns pointer to new string memory or NULL on failure.
- */
-
-char *_strdup(const char *str)
-{
-	char *copy;
-	int i, j;
-
-	if (str == NULL)
-		return (NULL);
-
-	j = _strlen(str);
-
-	copy = malloc(sizeof(char) * j + 1);
-
-	if (copy == NULL)
-		return (NULL);
-
-	for (i = 0; str[i] != '\0'; i++)
-		copy[i] = str[i];
-
-	return (copy);
-}
 
 /**
  * _strlen - entry to function
@@ -89,9 +61,36 @@ void free_list(file_list **files)
 	while (*files)
 	{
 		tmp = (*files)->next;
+		free((*files)->name);
 		free(*files);
 		*files = tmp;
 	}
 	free(*files);
 	*files = NULL;
+}
+
+/**
+ * *_strncpy - entry to function
+ * @dest: copied string
+ * @src: string to be copied
+ * @n: length of src
+ * Return: destination of copied string
+ */
+
+char *_strncpy(char *dest, const char *src, int n)
+{
+	int i = 0;
+
+	while (src[i] != '\0')
+	{
+		if (i < n)
+		dest[i] = src[i];
+
+		else
+			break;
+		i++;
+	}
+	dest[i] = '\0';
+
+	return (dest);
 }

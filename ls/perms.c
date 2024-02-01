@@ -86,7 +86,7 @@ char *make_path(char *dir, char *filename)
 {
 	char *filepath = NULL;
 
-	filepath = malloc(sizeof(char) * (_strlen(dir) + _strlen(filename) + 2));
+	filepath = malloc(sizeof(char*) * (_strlen(dir) + _strlen(filename) + 2));
 	if (!filepath)
 		return (NULL);
 	filepath[0] = '\0';

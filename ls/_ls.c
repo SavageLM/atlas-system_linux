@@ -92,8 +92,10 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int
 			if (flag_l)
 				l_option(dir, res->d_name);
 			else
+			{
 				print_flag(res->d_name, p_flag);
 				p_flag = 1;
+			}
 		}
 		else if (!flag_a)
 		{
@@ -102,16 +104,20 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int
 			if (flag_l)
 				l_option(dir, res->d_name);
 			else
+			{
 				print_flag(res->d_name, p_flag);
 				p_flag = 1;
+			}
 		}
 		else
 			{
 				if (flag_l)
 					l_option(dir, res->d_name);
 				else
+				{
 					print_flag(res->d_name, p_flag);
 					p_flag = 1;
+				}
 			}
 		if (flag_1)
 			printf("\n");
@@ -128,14 +134,17 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int
 void addnode(const char *filename, file_list **flist)
 {
 	file_list *newf = NULL, *tmp = *flist;
-	char *fn_copy;
-
-	fn_copy = _strdup(filename);
-
+	/*
+	fn_copy = malloc(_strlen(filename) + 1);
+	_strncpy(fn_copy, filename, _strlen(filename) + 1);
+*/
 	newf = malloc(sizeof(file_list));
+	newf->name = malloc(_strlen(filename) + 1);
 	if (!newf)
 		return;
-	newf->name = fn_copy;
+	_strncpy(newf->name, filename, _strlen(filename) + 1);;
+	printf("%s, %d\n\n\n\n", newf->name, _strlen(newf->name));
+
 	newf->next = NULL;
 	if (!*flist)
 		*flist = newf;
