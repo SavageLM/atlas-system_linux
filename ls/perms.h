@@ -17,6 +17,5 @@ void usr_perms(mode_t mode);
 void grp_perms(mode_t mode);
 void other_perms(mode_t mode);
 char *make_path(const char *dir, char *filename);
-int print_flag(const char* file, int p_flag);
 
 #endif

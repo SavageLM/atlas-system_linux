@@ -97,21 +97,3 @@ char *make_path(char *dir, char *filename)
 	_strcat(filepath, filename);
 	return (filepath);
 }
-
-/**
- * print_flag - function for controlling print format
- * @file: file to print
- * @p_flag: flag for format
-*/
-
-int print_flag(const char* file, int p_flag)
-{
-	if (p_flag)
-		printf(" %s", file);
-	else
-	{
-		printf("%s", file);
-		p_flag = 1;
-		}
-		return (p_flag);
-}

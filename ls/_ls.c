@@ -1,6 +1,7 @@
 #include "_ls.h"
 #include "_str.h"
 #include "perms.h"
+#include "print.h"
 
 int flag_1 = 0, flag_a = 0, flag_l = 0, flag_A = 0;
 
@@ -14,16 +15,19 @@ int flag_1 = 0, flag_a = 0, flag_l = 0, flag_A = 0;
 int main(int argc, const char *argv[])
 {
 	static file_list *flist, *tmp;
-	int i = 1, count = 0;
+	int i = 1, err_catch = 0, count = 0;
 
 	if (argc == 1)
-	{
 		new_ls(".", 0, 0, 0, 0, 0);
-	}
-	else if (argc == 2 && argv[1][0] == '-')
+	else if (argc == 2)
 	{
-		flag_checker(argc, argv);
-		new_ls(".", flag_a, flag_l, flag_1, flag_A, count);
+		if (argv[1][0] == '-')
+		{
+			flag_checker(argc, argv);
+			new_ls(".", flag_a, flag_l, flag_1, flag_A, count);
+		}
+		else
+			new_ls(argv[1], 0, 0, 0, 0, 0);
 	}
 	else if (argc > 2)
 	{
@@ -40,7 +44,11 @@ int main(int argc, const char *argv[])
 		tmp = flist;
 		while (tmp)
 		{
-			new_ls(tmp->name, flag_a, flag_l, flag_1, flag_A, count);
+			err_catch = new_ls(tmp->name, flag_a, flag_l, flag_1, flag_A, count);
+			printf("HERE");
+			printf("%d is error\n", err_catch);
+			if (err_catch)
+				print_error(argv[0], tmp->name, err_catch);
 			tmp = tmp->next;
 		}
 		free_list(&flist);
@@ -57,30 +65,31 @@ int main(int argc, const char *argv[])
  * @flag_l: optional flag for long listing format
  * @flag_1: optional flag for one file per line
  * @flag_A: optional flag for amlmost all files
+ * Return: 0 on success, errno on error
 */
 
-void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int count)
+int new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int count)
 {
-	int p_flag = 0;
+	int p_flag = 0, d_flag = 0;
 	struct dirent *res;
 	struct stat info;
 	DIR *dh = opendir(dir);
 
 	if (!dh)
 	{
-		if (lstat(dir, &info) == 0)
+		if (lstat(dir, &info) != -1)
 		{
-			printf("%s ", dir);
-			return;
+			printf("%s", dir);
+			return (0);
 		}
 		else
-		{
-			perror("./hls");
-			exit(EXIT_FAILURE);
-		}
+			return (errno);
 	}
 	if (count > 1)
-		printf("%s:\n", dir);
+	{
+		dirprint_flag(dir, d_flag);
+		d_flag = 1;
+	}
 	while ((res = readdir(dh)))
 	{
 		if (flag_A)
@@ -93,7 +102,7 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int
 				l_option(dir, res->d_name);
 			else
 			{
-				print_flag(res->d_name, p_flag);
+				print_flag(res->d_name, p_flag, flag_1);
 				p_flag = 1;
 			}
 		}
@@ -105,7 +114,7 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int
 				l_option(dir, res->d_name);
 			else
 			{
-				print_flag(res->d_name, p_flag);
+				print_flag(res->d_name, p_flag, flag_1);
 				p_flag = 1;
 			}
 		}
@@ -115,14 +124,13 @@ void new_ls(const char *dir, int flag_a, int flag_l, int flag_1, int flag_A, int
 					l_option(dir, res->d_name);
 				else
 				{
-					print_flag(res->d_name, p_flag);
+					print_flag(res->d_name, p_flag, flag_1);
 					p_flag = 1;
 				}
 			}
-		if (flag_1)
-			printf("\n");
 	}
 	closedir(dh);
+	return (0);
 }
 
 /**
