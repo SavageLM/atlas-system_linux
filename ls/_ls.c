@@ -143,7 +143,6 @@ void addnode(const char *filename, file_list **flist)
 	if (!newf)
 		return;
 	_strncpy(newf->name, filename, _strlen(filename) + 1);;
-	printf("%s, %d\n\n\n\n", newf->name, _strlen(newf->name));
 
 	newf->next = NULL;
 	if (!*flist)
