@@ -9,9 +9,9 @@ if __name__ == "__main__":
 
     if len(argv) != 4:
         exit("Unsupported  number of arguments")
-    pid = int(argv[2])
-    search_str = argv[3].encode()
-    replace_str = argv[4].encode()
+    pid = int(argv[1])
+    search_str = argv[2].encode()
+    replace_str = argv[3].encode()
     try:
         mem_map = open(f"/proc/{pid}/maps", "r")
     except FileNotFoundError as error:
