@@ -23,12 +23,13 @@ if __name__ == "__main__":
     print("Target memory location found")
     mem_map.close()
     try:
-        heap_mem = open(f"/proc/{pid}/maps", "r+b")
+        heap_mem = open(f"/proc/{pid}/mem", "r+b")
     except FileNotFoundError as error:
         exit(error)
     heap_mem.seek(heap_start)
     mem = heap_mem.read(heap_end - heap_start)
-    str_at = mem.find(search_str)
+    str_at = mem.find(search_str) + heap_start
+    print(f"{search_str}:{str_at}")
     if str_at > -1:
         print(f"Target Located at {hex(str_at)}")
         if len(search_str) > len(replace_str):
