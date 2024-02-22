@@ -31,8 +31,12 @@ if __name__ == "__main__":
     str_at = mem.find(search_str)
     if str_at > -1:
         print(f"Target Located at {hex(str_at)}")
-        heap_mem.seek(str_at)
-        heap_mem.write(replace_str)
+        if len(search_str) > len(replace_str):
+            heap_mem.seek(str_at + len(replace_str))
+            heap_mem.write(b'\0')
+        else:
+            heap_mem.seek(str_at)
+            heap_mem.write(replace_str)
         print("Target Replaced")
     else:
         print("Unable to locate Target")
