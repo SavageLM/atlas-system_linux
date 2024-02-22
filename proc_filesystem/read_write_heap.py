@@ -38,3 +38,4 @@ if __name__ == "__main__":
         print("Unable to locate Target")
     heap_mem.close()
     print("Mission Complete")
+    exit()
