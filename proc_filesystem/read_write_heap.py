@@ -7,7 +7,7 @@ in a provided PID heap memory
 if __name__ == "__main__":
     from sys import argv
 
-    if len(argv) != 4:
+    if len(argv) != 3:
         exit("Unsupported  number of arguments")
     pid = int(argv[1])
     search_str = argv[2].encode()
