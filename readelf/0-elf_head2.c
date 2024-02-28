@@ -27,27 +27,30 @@ int print_ver(char *prog, elf_hdr header)
 void print_osabi(elf_hdr header)
 {
 	printf("  OS/ABI:                            ");
-	if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_NONE ||\
-		header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_SYSV)
-		printf("UNIX System V ABI\n");
+	if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_NONE)
+		printf("UNIX - System V\n");
+	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_SYSV)
+		printf("UNIX System V\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_HPUX)
-		printf("HP-UX ABI\n");
+		printf("HP-UX\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_NETBSD)
-		printf("NetBSD ABI\n");
+		printf("NetBSD\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_LINUX)
-		printf("Linux ABI\n");
+		printf("UNIX - Linux\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_SOLARIS)
-		printf("Solaris ABI\n");
+		printf("UNIX - Solaris\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_IRIX)
-		printf("IRIX ABI\n");
+		printf("UNIX - SGI Irix\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_FREEBSD)
-		printf("FreeBSD ABI\n");
+		printf("UNOX - FreeBSD\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_TRU64)
-		printf("TRU64 UNIX ABI\n");
+		printf("UNIX - Compaq TRU64\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_ARM)
-		printf("ARM architecture ABI\n");
+		printf("UNIX - ARM\n");
+	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_STANDALONE)
+		printf("SUNIX - Standalone (embedded) application\n\n");
 	else
-		printf("Stand_alone (embedded) ABI\n");
+		printf("<unknown: %x>\n",header.Ehdr64.e_ident[EI_OSABI]);
 	printf("  ABI Version:                       %i\n", header.Ehdr64.e_ident[EI_ABIVERSION]);
 }
 
