@@ -12,17 +12,33 @@
  * @elf64_hdr: 64 bit ELF header
  * @elf32_sec: 32 bit section header
  * @elf64_sec: 64 bit section header
- * @flag_OP: flag for 32 or 64 bit op
- * @flag_SIG: flag for lsb or msb
 */
 typedef struct elf_hdr
 {
-	elf_head Ehdr;
-	elf_sec Shdr;
-	int flag_OP = 0;
-	int flag_SIG = 0;
+	Elf32_Ehdr Ehdr32;
+	Elf64_Ehdr Ehdr64;
+	Elf32_Shdr Shdr32;
+	Elf64_Shdr Shdr64;
 } elf_hdr;
 
 /*Prototypes*/
+int main(int argc, char **argv);
+int proute_header(FILE *fptr, char *prog);
+void print_magnum(elf_hdr header);
+int print_class(char *prog, elf_hdr header);
+int print_data(char *prog, elf_hdr header);
+int print_ver(char *prog, elf_hdr header);
+void print_osabi(elf_hdr header);
+void print_type(elf_hdr header, int flag_SIG);
+void print_machine(elf_hdr header,int flag_SIG);
+void print_fver(elf_hdr header, int flag_SIG);
+void print_entry(elf_hdr header, int flag_OP, int flag_SIG);
+void print_phoff_shoff(elf_hdr header, int flag_OP, int flag_SIG);
+void print_flags(elf_hdr header, int flag_OP, int flag_SIG);
+void print_phehsize(elf_hdr header, int flag_OP, int flag_SIG);
+void print_phnum(elf_hdr header, int flag_OP, int flag_SIG);
+void print_shentsize_num(elf_hdr header, int flag_OP, int flag_SIG);
+void print_shstrndx(elf_hdr header, int flag_OP, int flag_SIG);
+void convert_bits(char *ptr, size_t size);
 
 #endif
