@@ -61,8 +61,9 @@ void print_type(elf_hdr header, int flag_SIG)
 {
 	Elf64_Half elf_type = header.Ehdr64.e_type;
 
-	/*if (flag_SIG == 1)
-		convert_bits((char *) &elf_type, sizeof(elf_type));*/
+	if (flag_SIG == 1)
+		/*convert_bits((char *) &elf_type, sizeof(elf_type));*/
+		continue;
 	printf("  Type:                              ");
 	if (elf_type == ET_NONE)
 		printf("NONE (No file type)\n");
