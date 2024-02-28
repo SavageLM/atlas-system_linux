@@ -34,7 +34,7 @@ void print_osabi(elf_hdr header)
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_HPUX)
 		printf("HP-UX\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_NETBSD)
-		printf("NetBSD\n");
+		printf("UNIX - NetBSD\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_LINUX)
 		printf("UNIX - Linux\n");
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_SOLARIS)
