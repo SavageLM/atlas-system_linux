@@ -31,4 +31,32 @@ void print_phoff_shoff(elf_hdr header)
 */
 
 void print_flags(elf_hdr header)
-{}
+{
+	printf("  Flags:                             ");
+	printf("0x%x\n", header.Ehdr.e_flags);
+}
+
+/**
+ * print_phehsize - Function to print size of header and program header
+ * @header: Struct holding ELF header data
+*/
+
+void print_phehsize(elf_hdr header)
+{
+	printf("  Size of this header:               ");
+	printf("%i (bytes)\n", header.Ehdr.e_ehsize);
+
+	printf("  Size of program headers:           ");
+	printf("%i (bytes)\n", header.Ehdr.e_phentsize);
+}
+
+/**
+ * print_phnum - function to print number of items in program header
+ * @header: Struct holding ELF header data
+*/
+
+void print_phnum(elf_hdr header)
+{
+	printf("  Number of program headers:         ");
+	printf("%i\n", header.Ehdr.e_phnum);
+}
