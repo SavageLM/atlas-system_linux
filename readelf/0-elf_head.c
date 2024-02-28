@@ -145,7 +145,7 @@ int print_data(char *prog, elf_hdr header)
 	}
 	else
 	{
-		printf("  %-35s%s\n", "Data:", "2's complement, big endian\n");
+		printf("  %-35s%s\n", "Data:", "2's complement, big endian");
 		return (1);
 	}
 	return (3);
