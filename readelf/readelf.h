@@ -22,6 +22,8 @@ typedef struct elf_hdr
 } elf_hdr;
 
 /*Prototypes*/
+
+/*0-hreadelf*/
 int main(int argc, char **argv);
 int proute_header(FILE *fptr, char *prog);
 void print_magnum(elf_hdr header);
@@ -40,5 +42,8 @@ void print_phnum(elf_hdr header, int flag_OP, int flag_SIG);
 void print_shentsize_num(elf_hdr header, int flag_OP, int flag_SIG);
 void print_shstrndx(elf_hdr header, int flag_OP, int flag_SIG);
 void convert_bits(char *ptr, size_t size);
+
+/*1-hreadelf*/
+int main(int argc, char **argv);
 
 #endif

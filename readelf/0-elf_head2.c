@@ -89,7 +89,7 @@ void print_machine(elf_hdr header, int flag_SIG)
 {
 	Elf64_Half elf_machine = header.Ehdr64.e_machine;
 
-	if (flag_SIG)
+	if (flag_SIG == 1)
 		convert_bits((char *) &elf_machine, sizeof(elf_machine));
 	printf("  Machine:                           ");
 	if (elf_machine == EM_NONE)

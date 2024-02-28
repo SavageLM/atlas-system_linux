@@ -16,7 +16,7 @@ void print_shentsize_num(elf_hdr header, int flag_OP, int flag_SIG)
 
 	if (flag_OP == 64)
 	{
-		if (flag_SIG)
+		if (flag_SIG == 1)
 		{
 			convert_bits((char *) &sect_size64, sizeof(sect_size64));
 			convert_bits((char *) &sect_num64, sizeof(sect_num64));
@@ -28,7 +28,7 @@ void print_shentsize_num(elf_hdr header, int flag_OP, int flag_SIG)
 	}
 	else
 	{
-		if (flag_SIG)
+		if (flag_SIG == 1)
 		{
 			convert_bits((char *) &sect_size32, sizeof(sect_size32));
 			convert_bits((char *) &sect_num32, sizeof(sect_num32));
