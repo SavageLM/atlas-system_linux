@@ -17,7 +17,7 @@ void print_entry(elf_hdr header, int flag_OP, int flag_SIG)
 	{
 		if (flag_SIG == 1)
 			/*convert_bits((char *) &enter_64, sizeof(enter_64));*/
-			printf("");
+			printf("\n");
 		printf("0x%lx\n", enter_64);
 	}
 	else
