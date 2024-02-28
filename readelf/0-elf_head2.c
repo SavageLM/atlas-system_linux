@@ -48,7 +48,7 @@ void print_osabi(elf_hdr header)
 		printf("ARM architecture ABI\n");
 	else
 		printf("Stand_alone (embedded) ABI\n");
-	printf("ABI Version:                       %i\n", header.Ehdr64.e_ident[EI_ABIVERSION]);
+	printf("  ABI Version:                       %i\n", header.Ehdr64.e_ident[EI_ABIVERSION]);
 }
 
 /**

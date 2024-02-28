@@ -8,10 +8,10 @@
 
 /**
  * struct elf_hdr - struct for 32 and 64 bit  ELF file headers
- * @elf32_hdr: 32 bit ELF header
- * @elf64_hdr: 64 bit ELF header
- * @elf32_sec: 32 bit section header
- * @elf64_sec: 64 bit section header
+ * @Ehdr32: 32 bit ELF header
+ * @Ehdr64: 64 bit ELF header
+ * @Shdr32: 32 bit section header
+ * @Shdr64: 64 bit section header
 */
 typedef struct elf_hdr
 {
@@ -30,7 +30,7 @@ int print_data(char *prog, elf_hdr header);
 int print_ver(char *prog, elf_hdr header);
 void print_osabi(elf_hdr header);
 void print_type(elf_hdr header, int flag_SIG);
-void print_machine(elf_hdr header,int flag_SIG);
+void print_machine(elf_hdr header, int flag_SIG);
 void print_fver(elf_hdr header, int flag_SIG);
 void print_entry(elf_hdr header, int flag_OP, int flag_SIG);
 void print_phoff_shoff(elf_hdr header, int flag_OP, int flag_SIG);
