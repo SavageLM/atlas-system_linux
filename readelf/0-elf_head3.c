@@ -3,6 +3,8 @@
 /**
  * print_entry - Function that prints virtual address where control is passed
  * @header: Struct Containing the ELF header data
+ * @flag_OP: Flag for 32 or 64 bit OP
+ * @flag_SIG: flag for lsb or msb
 */
 
 void print_entry(elf_hdr header, int flag_OP, int flag_SIG)
@@ -28,6 +30,8 @@ void print_entry(elf_hdr header, int flag_OP, int flag_SIG)
 /**
  * print_phoff_shoff - Function that prints Section/program header offset
  * @header: Struct that contains the ELF header data
+ * @flag_OP: Flag for 32 or 64 bit OP
+ * @flag_SIG: flag for lsb or msb
 */
 
 void print_phoff_shoff(elf_hdr header, int flag_OP, int flag_SIG)
@@ -49,7 +53,6 @@ void print_phoff_shoff(elf_hdr header, int flag_OP, int flag_SIG)
 		printf("  Start of section headers:          ");
 		printf("%li (bytes into file)\n", shoff64);
 	}
-		
 	else
 		{
 			if (flag_SIG == 1)
@@ -61,13 +64,14 @@ void print_phoff_shoff(elf_hdr header, int flag_OP, int flag_SIG)
 			printf("%i (bytes into file)\n", phoff32);
 			printf("  Start of section headers:          ");
 			printf("%i (bytes into file)\n", shoff32);
-			
 		}
 }
 
 /**
  * print_flags - Function to print the flags
  * @header: Struct Containing the ELF header data
+ * @flag_OP: Flag for 32 or 64 bit OP
+ * @flag_SIG: flag for lsb or msb
 */
 
 void print_flags(elf_hdr header, int flag_OP, int flag_SIG)
@@ -94,6 +98,8 @@ void print_flags(elf_hdr header, int flag_OP, int flag_SIG)
 /**
  * print_phehsize - Function to print size of header and program header
  * @header: Struct holding ELF header data
+ * @flag_OP: Flag for 32 or 64 bit OP
+ * @flag_SIG: flag for lsb or msb
 */
 
 void print_phehsize(elf_hdr header, int flag_OP, int flag_SIG)
@@ -132,6 +138,8 @@ void print_phehsize(elf_hdr header, int flag_OP, int flag_SIG)
 /**
  * print_phnum - function to print number of items in program header
  * @header: Struct holding ELF header data
+ * @flag_OP: Flag for 32 or 64 bit OP
+ * @flag_SIG: flag for lsb or msb
 */
 
 void print_phnum(elf_hdr header, int flag_OP, int flag_SIG)

@@ -83,8 +83,6 @@ int proute_header(FILE *fptr, char *prog)
 
 /**
  * print_magnum - Checks if file is an ELF file, and prints the magic number
- * @fptr: pointer to the file stream
- * @prog: Name of the called program
  * @header: struct with ELF Header data
 */
 
@@ -116,12 +114,12 @@ int print_class(char *prog, elf_hdr header)
 	else if (header.Ehdr64.e_ident[EI_CLASS] == ELFCLASS32)
 	{
 		printf("  Class:                             ELF32\n");
-		return(32);
+		return (32);
 	}
 	else if (header.Ehdr64.e_ident[EI_CLASS] == ELFCLASS64)
 	{
 		printf("  Class:                             ELF32\n");
-		return(64);
+		return (64);
 	}
 	return (1);
 }

@@ -79,6 +79,7 @@ void print_type(elf_hdr header, int flag_SIG)
 /**
  * print_machine - Function that prints the required architecture for a file
  * @header: Struct that contains the ELF header data
+ * @flag_SIG: flag for lsb or msb
 */
 
 void print_machine(elf_hdr header, int flag_SIG)
@@ -131,6 +132,7 @@ void print_machine(elf_hdr header, int flag_SIG)
 /**
  * print_fver - Function that prints the file version
  * @header: Struct containing the ELF header data
+ * @flag_SIG: flag for lsb or msb
 */
 
 void print_fver(elf_hdr header, int flag_SIG)

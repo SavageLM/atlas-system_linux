@@ -3,6 +3,8 @@
 /**
  * print_shentsize_num - FUnction to print section header size
  * @header:Struct holding ELF header data
+ * @flag_OP: Flag for 32 or 64 bit OP
+ * @flag_SIG: flag for lsb or msb
 */
 
 void print_shentsize_num(elf_hdr header, int flag_OP, int flag_SIG)
@@ -41,6 +43,8 @@ void print_shentsize_num(elf_hdr header, int flag_OP, int flag_SIG)
 /**
  * print_shstrndx - Function that prints header table string index
  * @header: Struct holding ELF header data
+ * @flag_OP: Flag for 32 or 64 bit OP
+ * @flag_SIG: flag for lsb or msb
 */
 
 void print_shstrndx(elf_hdr header, int flag_OP, int flag_SIG)
@@ -67,7 +71,7 @@ void print_shstrndx(elf_hdr header, int flag_OP, int flag_SIG)
 /**
  * convert_bits - Function to convert from lsb to msb
  * @ptr: pointer to first octet of word
- * @size: size of type ptr points to
+ * @size: size of ptr
 */
 
 void convert_bits(char *ptr, size_t size)
