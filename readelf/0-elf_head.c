@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		fprintf(stderr, "Unsupported number of Arguments");
+		fprintf(stderr, "Unsupported number of Arguments\n");
 		return (-1);
 	}
 	stat(argv[1], &info);
@@ -89,7 +89,7 @@ int print_magnum(FILE *fptr, char *prog, elf_hdr header)
 	fread(&header.Ehdr, sizeof(header.Ehdr), 1, fptr);
 	if (memcmp(header.Ehdr.e_indent, ELFMAG, SELFMAG))
 	{
-		fprintf(stderr, "%s: Error Not an ELF file", prog);
+		fprintf(stderr, "%s: Error Not an ELF file\n", prog);
 		return (0);
 	}
 	printf("ELF Header:\n");
@@ -116,12 +116,12 @@ int print_class(char *prog, elf_hdr header)
 	}
 	else if (header.Ehdr.e_ident[EI_CLASS] == ELFCLASS32)
 	{
-		printf("  Class:                             ELF32")
+		printf("  Class:                             ELF32\n")
 		header.flag_OP = 32;
 	}
 	else if (header.Ehdr.e_ident[EI_CLASS] == ELFCLASS64)
 	{
-		printf("  Class:                             ELF32")
+		printf("  Class:                             ELF32\n")
 		header.flag_OP = 64;
 	}
 	return (1);
@@ -138,16 +138,16 @@ int print_data(char *prog, elf_hdr header)
 {
 	if (header.Ehdr.e_ident[EI_DATA] == ELFDATANONE)
 	{
-		fprintf(stderr, "%s: Error: Unknown data format", prog);
+		fprintf(stderr, "%s: Error: Unknown data format\n", prog);
 		return (0);
 	}
 	else if (header.Ehdr.e_ident[EI_DATA] == ELFDATA2LSB)
 	{
-		printf("  Data:                              2's complement, little endian");
+		printf("  Data:                              2's complement, little endian\n");
 		header.flag_SIG = 1;
 	}
 	else
-		printf("  Data:                              2's complement, big endian");
+		printf("  Data:                              2's complement, big endian\n");
 		header.flag_SIG = 2;
 		return (1);
 }
