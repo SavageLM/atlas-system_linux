@@ -118,7 +118,7 @@ int print_class(char *prog, elf_hdr header)
 	}
 	else if (header.Ehdr64.e_ident[EI_CLASS] == ELFCLASS64)
 	{
-		printf("  Class:                             ELF32\n");
+		printf("  Class:                             ELF64\n");
 		return (64);
 	}
 	return (1);
