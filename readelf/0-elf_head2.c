@@ -63,7 +63,7 @@ void print_type(elf_hdr header, int flag_SIG)
 
 	if (flag_SIG == 1)
 		/*convert_bits((char *) &elf_type, sizeof(elf_type));*/
-		continue;
+		printf("\n");
 	printf("  Type:                              ");
 	if (elf_type == ET_NONE)
 		printf("NONE (No file type)\n");
