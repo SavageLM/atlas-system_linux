@@ -67,16 +67,16 @@ int proute_header(FILE *fptr, char *prog)
 	if (!print_ver(prog, header))
 		return (0);
 	print_osabi(header);
-	print_type(header, flag_SIG);
-	print_machine(header, flag_SIG);
-	print_fver(header, flag_SIG);
-	print_entry(header, flag_OP, flag_SIG);
-	print_phoff_shoff(header, flag_OP, flag_SIG);
-	print_flags(header, flag_OP, flag_SIG);
-	print_phehsize(header, flag_OP, flag_SIG);
-	print_phnum(header, flag_OP, flag_SIG);
-	print_shentsize_num(header, flag_OP, flag_SIG);
-	print_shstrndx(header, flag_OP, flag_SIG);
+	print_type(header);
+	print_machine(header);
+	print_fver(header);
+	print_entry(header, flag_OP);
+	print_phoff_shoff(header, flag_OP);
+	print_flags(header, flag_OP);
+	print_phehsize(header, flag_OP);
+	print_phnum(header, flag_OP);
+	print_shentsize_num(header, flag_OP);
+	print_shstrndx(header, flag_OP);
 	fclose(fptr);
 	return (1);
 }
