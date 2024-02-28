@@ -127,7 +127,7 @@ void print_machine(elf_hdr header, int flag_SIG)
 	else if (elf_machine == EM_IA_64)
 		printf("Intel Merced\n");
 	else if (elf_machine == EM_X86_64)
-		printf("Advanced Micro Devices x86-64\n");
+		printf("Advanced Micro Devices X86-64\n");
 	else
 		printf("Digital VAX\n");
 }
