@@ -62,8 +62,7 @@ int proute_header(FILE *fptr, char *prog, char *file_name)
 	print_machine(header);
 	print_fver(header);
 	print_entry(header);
-	print_phoff(header);
-	print_shoff(header);
+	print_phoff_shoff(header);
 	print_flags(header);
 	print_drsize(header);
 	print_phum(header);
