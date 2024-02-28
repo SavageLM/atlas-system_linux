@@ -93,23 +93,23 @@ void print_machine(elf_hdr header, int flag_SIG)
 		convert_bits((char *) &elf_machine, sizeof(elf_machine));
 	printf("  Machine:                           ");
 	if (elf_machine == EM_NONE)
-		printf("Unknown machine\n");
+		printf("No machine\n");
 	else if (elf_machine == EM_M32)
 		printf("AT&T WE 32100\n");
 	else if (elf_machine == EM_SPARC)
-		printf("Sun Microsystems SPARC\n");
+		printf("Sparc\n");
 	else if (elf_machine == EM_386)
 		printf("Intel 80386\n");
 	else if (elf_machine == EM_68K)
-		printf(" Motorola 68000\n");
+		printf(" Motorola m68k family\n");
 	else if (elf_machine == EM_88K)
-		printf("Motorola 88000\n");
+		printf("Motorola m88k family\n");
 	else if (elf_machine == EM_860)
 		printf("Intel 80860\n");
 	else if (elf_machine == EM_MIPS)
-		printf("MIPS RS3000 (big-endian only)\n");
+		printf("MIPS RS3000 big-endian\n");
 	else if (elf_machine == EM_PARISC)
-		printf("HP/PA\n");
+		printf("HPPA\n");
 	else if (elf_machine == EM_SPARC32PLUS)
 		printf("SPARC with enhanced in struction set\n");
 	else if (elf_machine == EM_PPC)
@@ -117,19 +117,19 @@ void print_machine(elf_hdr header, int flag_SIG)
 	else if (elf_machine == EM_PPC64)
 		printf("PowerPC 64-bit\n");
 	else if (elf_machine == EM_S390)
-		printf("IBM S/390\n");
+		printf("IBM S390\n");
 	else if (elf_machine == EM_ARM)
-		printf("Advanced RISC Machines\n");
+		printf("ARM\n");
 	else if (elf_machine == EM_SH)
-		printf("Renesas SuperH\n");
+		printf("Hitachi SH\n");
 	else if (elf_machine == EM_SPARCV9)
 		printf("SPARC v9 64-bit\n");
 	else if (elf_machine == EM_IA_64)
-		printf("Intel Itanium\n");
+		printf("Intel Merced\n");
 	else if (elf_machine == EM_X86_64)
-		printf("AMD x86-64\n");
+		printf("Advanced Micro Devices x86-64\n");
 	else
-		printf("DEC Vax\n");
+		printf("Digital VAX\n");
 }
 
 /**

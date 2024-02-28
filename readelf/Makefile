@@ -19,3 +19,4 @@ SRC = $(wildcard *.c)
 
 clean:
 	rm -f *-hreadelf
+	rm -f *.o
