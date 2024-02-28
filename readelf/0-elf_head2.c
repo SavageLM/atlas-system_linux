@@ -50,8 +50,8 @@ void print_osabi(elf_hdr header)
 	else if (header.Ehdr64.e_ident[EI_OSABI] == ELFOSABI_STANDALONE)
 		printf("SUNIX - Standalone (embedded) application\n\n");
 	else
-		printf("<unknown: %x>\n",header.Ehdr64.e_ident[EI_OSABI]);
-	printf("  ABI Version:                       %i\n", header.Ehdr64.e_ident[EI_ABIVERSION]);
+		printf("<unknown: %x>\n", header.Ehdr64.e_ident[EI_OSABI]);
+	printf("  %-35s%i\n", "ABI Version:", header.Ehdr64.e_ident[EI_ABIVERSION]);
 }
 
 /**
@@ -100,10 +100,6 @@ void print_machine(elf_hdr header, int flag_SIG)
 		printf("Sparc\n");
 	else if (elf_machine == EM_386)
 		printf("Intel 80386\n");
-	else if (elf_machine == EM_68K)
-		printf(" Motorola m68k family\n");
-	else if (elf_machine == EM_88K)
-		printf("Motorola m88k family\n");
 	else if (elf_machine == EM_860)
 		printf("Intel 80860\n");
 	else if (elf_machine == EM_MIPS)

@@ -140,12 +140,12 @@ int print_data(char *prog, elf_hdr header)
 	}
 	else if (header.Ehdr64.e_ident[EI_DATA] == ELFDATA2LSB)
 	{
-		printf("  Data:                              2's complement, little endian\n");
+		printf("  %-35s%s\n", "Data:", "2's complement, little endian");
 		return (2);
 	}
 	else
 	{
-		printf("  Data:                              2's complement, big endian\n");
+		printf("  %-35s%s\n", "Data:", "2's complement, big endian\n");
 		return (1);
 	}
 	return (3);
