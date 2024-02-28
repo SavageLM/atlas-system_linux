@@ -54,12 +54,15 @@ void print_osabi(elf_hdr header)
 /**
  * print_type - Function that prints file type
  * @header: Struct containing ELF header data
+ * @flag_SIG: flag for lsb or msb
 */
 
-void print_type(elf_hdr header)
+void print_type(elf_hdr header, int flag_SIG)
 {
 	Elf64_Half elf_type = header.Ehdr64.e_type;
 
+	if (flag_SIG == 1)
+		convert_bits((char *) &elf_type, sizeof(elf_type));
 	printf("  Type:                              ");
 	if (elf_type == ET_NONE)
 		printf("NONE (No file type)\n");
@@ -76,12 +79,15 @@ void print_type(elf_hdr header)
 /**
  * print_machine - Function that prints the required architecture for a file
  * @header: Struct that contains the ELF header data
+ * @flag_SIG: flag for lsb or msb
 */
 
-void print_machine(elf_hdr header)
+void print_machine(elf_hdr header, int flag_SIG)
 {
 	Elf64_Half elf_machine = header.Ehdr64.e_machine;
 
+	if (flag_SIG)
+		convert_bits((char *) &elf_machine, sizeof(elf_machine));
 	printf("  Machine:                           ");
 	if (elf_machine == EM_NONE)
 		printf("Unknown machine\n");
@@ -126,12 +132,15 @@ void print_machine(elf_hdr header)
 /**
  * print_fver - Function that prints the file version
  * @header: Struct containing the ELF header data
+ * @flag_SIG: flag for lsb or msb
 */
 
-void print_fver(elf_hdr header)
+void print_fver(elf_hdr header, int flag_SIG)
 {
 	Elf64_Word elf_ver = header.Ehdr64.e_version;
 
+	if (flag_SIG)
+		convert_bits((char *) &elf_ver, sizeof(elf_ver));
 	printf("  Version:                           ");
 	if (elf_ver == EV_NONE)
 		printf("Invalid version\n");

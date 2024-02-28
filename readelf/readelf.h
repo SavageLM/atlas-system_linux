@@ -29,16 +29,16 @@ int print_class(char *prog, elf_hdr header);
 int print_data(char *prog, elf_hdr header);
 int print_ver(char *prog, elf_hdr header);
 void print_osabi(elf_hdr header);
-void print_type(elf_hdr header);
-void print_machine(elf_hdr header);
-void print_fver(elf_hdr header);
-void print_entry(elf_hdr header, int flag_OP);
-void print_phoff_shoff(elf_hdr header, int flag_OP);
-void print_flags(elf_hdr header, int flag_OP);
-void print_phehsize(elf_hdr header, int flag_OP);
-void print_phnum(elf_hdr header, int flag_OP);
-void print_shentsize_num(elf_hdr header, int flag_OP);
-void print_shstrndx(elf_hdr header, int flag_OP);
-/*void convert_bits(char *ptr, size_t size);*/
+void print_type(elf_hdr header, int flag_SIG);
+void print_machine(elf_hdr header, int flag_SIG);
+void print_fver(elf_hdr header, int flag_SIG);
+void print_entry(elf_hdr header, int flag_OP, int flag_SIG);
+void print_phoff_shoff(elf_hdr header, int flag_OP, int flag_SIG);
+void print_flags(elf_hdr header, int flag_OP, int flag_SIG);
+void print_phehsize(elf_hdr header, int flag_OP, int flag_SIG);
+void print_phnum(elf_hdr header, int flag_OP, int flag_SIG);
+void print_shentsize_num(elf_hdr header, int flag_OP, int flag_SIG);
+void print_shstrndx(elf_hdr header, int flag_OP, int flag_SIG);
+void convert_bits(char *ptr, size_t size);
 
 #endif
