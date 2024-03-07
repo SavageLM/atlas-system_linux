@@ -7,7 +7,7 @@ BITS 64
     ; size_t asm_strlen(const char *str);
 
 a_strlen:
-    push pbs
+    push rbp
     mov rbp, rsp  ; Setup stack
 
     push rcx ; saves rcx count
