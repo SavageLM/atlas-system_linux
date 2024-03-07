@@ -6,7 +6,7 @@ BITS 64
 
     ; size_t asm_strlen(const char *str);
 
-a_strlen:
+asm_strlen:
     push rbp
     mov rbp, rsp  ; Setup stack
 
