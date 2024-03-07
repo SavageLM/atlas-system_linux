@@ -13,7 +13,7 @@ asm_strlen:
     push rcx ; saves rcx count
     xor rcx, rcx ; resets rcx to 0
 asm_strlen_next:
-    cmp [rdi], byte 0 ; checks if null
+    cmp byte [rdi], 0 ; checks if null
     jz asm_strlen_null ; jumps to end if null
     inc rcx ; if not null increment count
     inc rdi ; move to next byte
@@ -22,4 +22,5 @@ asm_strlen_next:
 asm_strlen_null:
     mov rax, rcx ; move count to rax
     pop rcx ; restore rcx
+    pop rbp
     ret ; exit
