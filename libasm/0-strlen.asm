@@ -19,7 +19,7 @@ asm_strlen_next:
     inc rdi ; move to next byte
     jmp asm_strlen_next ; repeat
 
-asm_strlen_null
+asm_strlen_null:
     mov rax, rcx ; move count to rax
     pop rcx ; restore rcx
     ret ; exit
