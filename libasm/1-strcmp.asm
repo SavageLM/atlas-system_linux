@@ -9,7 +9,7 @@ BITS 64
 asm_strcmp:
     push rbp
     mov rbp, rsp  ; Setup stack
-    xor rax, rax
+    xor rax, rax ; ensures rax is 0 at start
 
 asm_strcmp_next:
     cmp rdi, rsi ; checks if bytes are same
