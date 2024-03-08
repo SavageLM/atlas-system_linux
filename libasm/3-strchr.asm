@@ -1,6 +1,6 @@
 BITS 64
 
-    global asm_strcmp  ; EXPORT function
+    global asm_strchr  ; EXPORT function
 
     section .text
 
