@@ -4,7 +4,7 @@ BITS 64
 
     section .text
 
-    ; int asm_strncmp(const char *s1, const char *s2);
+    ; int asm_strncmp(const char *s1, const char *s2, size_t n);
 
 asm_strncmp:
     push rbp
