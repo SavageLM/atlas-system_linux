@@ -15,8 +15,9 @@ asm_memcpy:
 asm_memcpy_loop:
     test rdx, rdx ; performs AND operation
     jz asm_memcpy_end ; jumps to end
-    mov al, byte [rsi]
-    mov byte [rdi], al
+    mov al, byte [rsi] ; moves byte from source to al
+    mov byte [rdi], al ; move byte from al to dest
+    dec rdx ; decrease number of moves left
     inc rdi
     inc rsi ; incrementing strings
     jmp asm_memcpy_loop; Loop
