@@ -10,6 +10,7 @@ asm_strchr:
     push rbp
     mov rbp, rsp  ; Setup stack
     xor rax, rax ; ensures rax is 0 at start
+    xor rcx, rcx
 
 asm_strchr_next:
     movzx ecx, byte [rdi]
