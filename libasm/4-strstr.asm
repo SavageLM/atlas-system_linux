@@ -12,6 +12,9 @@ asm_strstr:
     xor rcx, rcx ; sets counter to 0
     xor rdx, rdx ; set counter to 0
     push r13
+    movzx edx, byte [rsi]
+    cmp dl, 0x00
+    jz asm_strstr_null
 asm_strstr_search:
     mov r13, rsi
     movzx ecx, byte [rdi]
