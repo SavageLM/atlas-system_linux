@@ -27,11 +27,11 @@ asm_strcmp_null:
     xor rax, rax
     jmp asm_strcmp_end
 asm_strcmp_neg:
-    sub rax, 1
+    mov rax, -1
     jmp asm_strcmp_end
 
 asm_strcmp_pos:
-    add rax, 1
+    mov rax, 1
     jmp asm_strcmp_end
 
 asm_strcmp_end:
