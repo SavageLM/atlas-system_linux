@@ -12,7 +12,7 @@ asm_strchr:
     xor rax, rax ; ensures rax is 0 at start
 
 asm_strchr_next:
-    movzx ecx byte [rdi]
+    movzx ecx, byte [rdi]
     cmp cl, sil ; checks if bytes are same
     jz asm_strchr_match
     inc rdi
