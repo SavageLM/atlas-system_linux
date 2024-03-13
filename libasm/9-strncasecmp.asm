@@ -41,7 +41,7 @@ asm_strncasecmp_null:
     cmp dl, 0x00
     jl asm_strncasecmp_neg
     xor rax, rax
-    jmp asm_strcasecmp_end
+    jmp asm_strncasecmp_end
 asm_strncasecmp_neg:
     sub rax, 1
     jmp asm_strncasecmp_end
