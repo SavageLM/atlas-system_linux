@@ -22,7 +22,7 @@ asm_strcmp_next:
     jmp asm_strcmp_next; Loop
 
 asm_strcmp_null:
-    cmp sil, 0x00
+    cmp dil, sil
     jl asm_strcmp_neg
     xor rax, rax
     jmp asm_strcmp_end
