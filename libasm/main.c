@@ -5,9 +5,8 @@
 
 #include "libasm.h"
 
-#define S1	"Holberton"
-#define S2	"Holberton School"
-#define S3 ""
+#define S1	"Holberton School"
+#define N	6
 
 /**
  * main - Program entry point
@@ -16,10 +15,7 @@
  */
 int main(void)
 {
-    printf(" real :%d mine: %d\n", strcmp(S1, S2), asm_strcmp(S1, S2));
-    printf(" real :%d mine: %d\n", strcmp(S3, S1), asm_strcmp(S3, S1));
-	assert(strcmp(S1, S2) == asm_strcmp(S1, S2));
-    assert(strcmp(S3, S1) == asm_strcmp(S3, S1));
+	assert(strncmp(S1, S1, N) == asm_strncmp(S1, S1, N));
 
 	printf("All good!\n");
 	return (EXIT_SUCCESS);

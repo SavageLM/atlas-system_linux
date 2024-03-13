@@ -19,11 +19,11 @@ asm_strncmp_next:
     cmp bl, al ; checks if bytes are same
     jg asm_strncmp_pos ; jumps to end for positive diff
     jl asm_strncmp_neg ; jumps to end for negative diff
-    cmp rdx, 0
-    jz asm_strncmp_end
     inc rdi
     inc rsi ; incrementing strings
     dec rdx
+    cmp rdx, 0
+    jz asm_strncmp_null
     jmp asm_strncmp_next; Loop
 
 asm_strncmp_null:
