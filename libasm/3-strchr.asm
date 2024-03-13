@@ -17,8 +17,9 @@ asm_strchr_next:
     cmp cl, sil ; checks if bytes are same
     jz asm_strchr_match
     inc rdi
-    test cl, cl
+    cmp cl, 0x00
     jnz asm_strchr_next; Loop
+    jz asm_strchr_end
 
 asm_strchr_match:
     mov rax, rdi
