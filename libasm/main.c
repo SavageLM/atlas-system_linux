@@ -5,10 +5,9 @@
 
 #include "libasm.h"
 
-#define S1  "Holberton School"
-#define S2  "HOLBERTON SCHOOL"
-#define S3  "Holberton SchooL"
-#define S4  "holberton socool"
+#define S1	"Holberton"
+#define S2	"Holberton School"
+#define S3 ""
 
 /**
  * main - Program entry point
@@ -17,11 +16,11 @@
  */
 int main(void)
 {
-    assert(strcasecmp(S1, S1) == asm_strcasecmp(S1, S1));
-    assert(strcasecmp(S1, S2) == asm_strcasecmp(S1, S2));
-    assert(strcasecmp(S1, S3) == asm_strcasecmp(S1, S3));
-    assert(strcasecmp(S1, S4) == asm_strcasecmp(S1, S4));
+    printf(" real :%d mine: %d\n", strcmp(S1, S2), asm_strcmp(S1, S2));
+    printf(" real :%d mine: %d\n", strcmp(S3, S1), asm_strcmp(S3, S1));
+	assert(strcmp(S1, S2) == asm_strcmp(S1, S2));
+    assert(strcmp(S3, S1) == asm_strcmp(S3, S1));
 
-    printf("All good!\n");
-    return (EXIT_SUCCESS);
+	printf("All good!\n");
+	return (EXIT_SUCCESS);
 }

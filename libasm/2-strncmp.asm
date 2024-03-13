@@ -14,8 +14,8 @@ asm_strncmp:
 
 asm_strncmp_next:
     cmp dil, sil ; checks if bytes are same
-    ja asm_strncmp_pos ; jumps to end for positive diff
-    jb asm_strncmp_neg ; jumps to end for negative diff
+    jg asm_strncmp_pos ; jumps to end for positive diff
+    jl asm_strncmp_neg ; jumps to end for negative diff
     cmp dil, 0x00
     jz asm_strncmp_null
     cmp rdx, rcx
@@ -27,6 +27,7 @@ asm_strncmp_next:
 
 asm_strncmp_null:
     cmp sil, 0x00
+    jl asm_strncmp_neg
     xor rax, rax
     jmp asm_strncmp_end
 asm_strncmp_neg:

@@ -15,8 +15,8 @@ asm_strcmp_next:
     cmp dil, 0x00
     jz asm_strcmp_null
     cmp dil, sil ; checks if bytes are same
-    ja asm_strcmp_pos ; jumps to end for positive diff
-    jb asm_strcmp_neg ; jumps to end for negative diff
+    jl asm_strcmp_pos ; jumps to end for positive diff
+    jg asm_strcmp_neg ; jumps to end for negative diff
     inc rdi
     inc rsi ; incrementing strings
     jmp asm_strcmp_next; Loop
@@ -24,11 +24,11 @@ asm_strcmp_next:
 asm_strcmp_null:
     cmp dil, sil
     jl asm_strcmp_neg
-    jg asm_strcmp_pos
     xor rax, rax
     jmp asm_strcmp_end
 asm_strcmp_neg:
-    sub rax, 1
+    xor rax, rax
+    mov rax, -1
     jmp asm_strcmp_end
 
 asm_strcmp_pos:
