@@ -15,7 +15,7 @@ asm_strcmp_next:
     cmp dil, sil ; checks if bytes are same
     ja asm_strcmp_pos ; jumps to end for positive diff
     jb asm_strcmp_neg ; jumps to end for negative diff
-    cmp dil, 0
+    cmp dil, 0x00
     jz asm_strcmp_null
     inc rdi
     inc rsi ; incrementing strings
