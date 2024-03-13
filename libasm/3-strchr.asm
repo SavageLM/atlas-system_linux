@@ -21,6 +21,7 @@ asm_strchr_next:
 
 asm_strchr_match:
     mov rax, rdi
+    jmp asm_strchr_end
 
 asm_strchr_end:
     pop rbp
