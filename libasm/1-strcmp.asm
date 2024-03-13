@@ -23,7 +23,7 @@ asm_strcmp_next:
 
 asm_strcmp_null:
     cmp sil, 0x00
-    jl asm_strcasecmp_neg
+    jl asm_strcmp_neg
     xor rax, rax
     jmp asm_strcmp_end
 asm_strcmp_neg:
