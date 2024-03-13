@@ -12,15 +12,15 @@ asm_strchr:
     xor rax, rax ; ensures rax is 0 at start
 
 asm_strchr_next:
-    cmp rdi, rsi ; checks if bytes are same
+    cmp dil, sil ; checks if bytes are same
     jz asm_strchr_match
-    cmp byte [rdi], 0
+    cmp dil, 0x00
     jz asm_strchr_end
     inc rdi
     jmp asm_strchr_next; Loop
 
 asm_strchr_match:
-    mov rax, rdi
+    mov rax, dil
 
 asm_strchr_end:
     pop rbp
