@@ -9,20 +9,22 @@ BITS 64
 asm_strcmp:
     push rbp
     mov rbp, rsp  ; Setup stack
-    xor rax, rax ; ensures rax is 0 at start
+    push rbx
 
 asm_strcmp_next:
-    cmp dil, 0x00
+    movzx ebx, byte [rdi]
+    movzx eax, byte [rsi]
+    cmp bl, 0x00
     jz asm_strcmp_null
-    cmp dil, sil ; checks if bytes are same
-    jl asm_strcmp_pos ; jumps to end for positive diff
-    jg asm_strcmp_neg ; jumps to end for negative diff
+    cmp bl, al ; checks if bytes are same
+    jg asm_strcmp_pos ; jumps to end for positive diff
+    jl asm_strcmp_neg ; jumps to end for negative diff
     inc rdi
     inc rsi ; incrementing strings
     jmp asm_strcmp_next; Loop
 
 asm_strcmp_null:
-    cmp dil, sil
+    cmp bl, al
     jl asm_strcmp_neg
     xor rax, rax
     jmp asm_strcmp_end
@@ -35,5 +37,6 @@ asm_strcmp_pos:
     jmp asm_strcmp_end
 
 asm_strcmp_end:
+    pop rbx
     pop rbp
     ret ; exit
