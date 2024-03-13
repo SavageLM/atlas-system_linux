@@ -13,10 +13,10 @@ asm_strncmp:
     xor rcx, rcx ; resets rcx to 0
 
 asm_strncmp_next:
-    cmp rdi, rsi ; checks if bytes are same
+    cmp dil, sil ; checks if bytes are same
     ja asm_strncmp_pos ; jumps to end for positive diff
     jb asm_strncmp_neg ; jumps to end for negative diff
-    cmp byte [rdi], 0
+    cmp dil, 0x00
     jz asm_strncmp_null
     cmp rdx, rcx
     jz asm_strncmp_end
@@ -26,11 +26,11 @@ asm_strncmp_next:
     jmp asm_strncmp_next; Loop
 
 asm_strncmp_null:
-    cmp byte [rsi], 0
+    cmp sil, 0x00
     xor rax, rax
     jmp asm_strncmp_end
 asm_strncmp_neg:
-    add rax, -1
+    sub rax, 1
     jmp asm_strncmp_end
 
 asm_strncmp_pos:
