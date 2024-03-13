@@ -24,6 +24,7 @@ asm_strcmp_next:
 asm_strcmp_null:
     cmp dil, sil
     jl asm_strcmp_neg
+    jg asm_strcmp_pos
     xor rax, rax
     jmp asm_strcmp_end
 asm_strcmp_neg:
