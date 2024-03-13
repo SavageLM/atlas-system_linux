@@ -20,7 +20,7 @@ asm_strchr_next:
     jmp asm_strchr_next; Loop
 
 asm_strchr_match:
-    mov rax, dil
+    mov rax, rdi
 
 asm_strchr_end:
     pop rbp
