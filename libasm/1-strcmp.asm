@@ -12,21 +12,21 @@ asm_strcmp:
     xor rax, rax ; ensures rax is 0 at start
 
 asm_strcmp_next:
-    cmp rdi, rsi ; checks if bytes are same
+    cmp dil, sil ; checks if bytes are same
     ja asm_strcmp_pos ; jumps to end for positive diff
     jb asm_strcmp_neg ; jumps to end for negative diff
-    cmp byte [rdi], 0
+    cmp dil, 0
     jz asm_strcmp_null
     inc rdi
     inc rsi ; incrementing strings
     jmp asm_strcmp_next; Loop
 
 asm_strcmp_null:
-    cmp byte [rsi], 0
+    cmp sil, 0x00
     xor rax, rax
     jmp asm_strcmp_end
 asm_strcmp_neg:
-    add rax, -1
+    sub rax, 1
     jmp asm_strcmp_end
 
 asm_strcmp_pos:

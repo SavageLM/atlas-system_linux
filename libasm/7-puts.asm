@@ -17,7 +17,7 @@ asm_puts:
     pop rdi ; retrieve rdi
     push rdi ; store it again
     mov r13, rax ; move rax value into r13
-    mov rax, 1 
+    mov rax, 1
     mov rsi, [rsp] ; moves top of stack into rsi
     mov rdx, r13 ; moves value in r13 into rdx
     syscall
