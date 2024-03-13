@@ -12,12 +12,12 @@ asm_puts:
     mov rbp, rsp  ; Setup stack
     push rsi
     push rdx ; store rdi value in stack
+    mov rsi, rdi ; moves top of stack into rsi
 
     call asm_strlen
     mov rdi, 1
     mov rdx, rax ; move rax value into r13
     mov rax, 1
-    mov rsi, [rsp] ; moves top of stack into rsi
     syscall
 
     pop rdx
