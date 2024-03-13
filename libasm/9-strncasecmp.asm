@@ -10,22 +10,31 @@ asm_strncasecmp:
     push rbp
     mov rbp, rsp  ; Setup stack
     xor rax, rax ; ensures rax is 0 at start
-    push r13
 
 asm_strncasecmp_next:
     cmp rdx, 0
     jz asm_strncasecmp_end
     mov rax, rdi
-	mov rdx, rsi
+	mov rcx, rsi
 	movzx eax, BYTE [rax]
 	movzx edx, BYTE [rdx]
     cmp al, 0x00
     jz asm_strncasecmp_null
     cmp al, 65 ; compares char to 'A'
-    jl asm_strncasecmp_cmp ; if less, is not a letter
+    jl asm_strncasecmp_cnvt ; if less, is not a letter
     cmp al, 90 ;  compares char to 'Z'
+    jg asm_strncasecmp_cnvt ; if greater is already lowercase, or not a letter
+    add al, 32 ; changes letter to lowercase
+    jmp asm_strncasecmp_cnvt
+
+asm_strncasecmp_cnvt:
+    cmp cl, 0x00
+    jz asm_strncasecmp_null
+    cmp cl, 65 ; compares char to 'A'
+    jl asm_strncasecmp_cmp ; if less, is not a letter
+    cmp cl, 90 ;  compares char to 'Z'
     jg asm_strncasecmp_cmp ; if greater is already lowercase, or not a letter
-    add ax, 32 ; changes letter to lowercase
+    add cl, 32 ; changes letter to lowercase
     jmp asm_strncasecmp_cmp
 
 asm_strncasecmp_cmp:
