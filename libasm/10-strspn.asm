@@ -1,27 +1,27 @@
 BITS 64
 
-    global asm_strchr  ; EXPORT function
+    global asm_strspn  ; EXPORT function
 
     section .text
 
-    ; char *asm_strchr(const char *s, int c);
+    ; size_t asm_strspn(const char *s, const char *accept);
 
-asm_strchr:
+asm_strspn:
     push rbp
     mov rbp, rsp  ; Setup stack
     xor rax, rax ; ensures rax is 0 at start
 
-asm_strchr_next:
+asm_strspn_next:
     cmp rdi, rsi ; checks if bytes are same
-    jz asm_strchr_match
+    jz asm_strspn_match
     cmp byte [rdi], 0
-    jz asm_strchr_end
+    jz asm_strspn_end
     inc rdi
-    jmp asm_strchr_next; Loop
+    jmp asm_strspn_next; Loop
 
-asm_strchr_match:
+asm_strspn_match:
     mov rax, rdi
 
-asm_strchr_end:
+asm_strspn_end:
     pop rbp
     ret ; exit
