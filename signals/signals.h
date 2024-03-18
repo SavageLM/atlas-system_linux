@@ -1,6 +1,10 @@
 #ifndef SIGNALS_H
 #define SIGNALS_H
 
+#include <std.io>
+#include <stdlib.h>
+#include <signal.h>
+
 /*Prototypes*/
 int handle_signal(void);
 void (*current_handler_signal(void))(int);
