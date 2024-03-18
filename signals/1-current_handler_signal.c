@@ -1,0 +1,17 @@
+#include "signals.h"
+
+/**
+ * current_handler_signal - gets current handler of SIGINT
+ * Return: pointer to handler or NULL
+*/
+
+void (*current_handler_signal(void))(int)
+{
+	sighandler_t old_handler;
+
+	old_handler = signal(SIGINT, SIG_DFL);
+
+	if (old_handler == SIG_ERR)
+		return (NULL);
+	return (signal(SIGINT, old_handler) == SIG_ERR ? NULL : old_handler);
+}
