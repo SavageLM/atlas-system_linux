@@ -10,6 +10,7 @@
 int main(int argc, char **argv)
 {
 	int arg = atoi(argv[1]);
+
 	if (argc != 2)
 	{
 		printf("Usage %s <signum>\n", argv[0]);
