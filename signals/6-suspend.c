@@ -13,7 +13,7 @@ void sig_catch(int sig)
 
 /**
  * main - entry to program
- * @arc: number of arguments. Unused
+ * @argc: number of arguments. Unused
  * @argv: Array of arguments, Unused
  * Return: 0 on success, -1 on fail
 */
