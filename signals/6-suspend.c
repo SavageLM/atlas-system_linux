@@ -1,7 +1,7 @@
 #include "signals.h"
 
 /**
- * find_pid - finds pid of process that sent SIGQUIT
+ * sig_catch - finds pid of process that sent SIGQUIT
  * @sig: signal received
 */
 
@@ -13,6 +13,8 @@ void sig_catch(int sig)
 
 /**
  * main - entry to program
+ * @arc: number of arguments. Unused
+ * @argv: Array of arguments, Unused
  * Return: 0 on success, -1 on fail
 */
 
