@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
+#include <unistd.h>
 
 /*Prototypes*/
 int handle_signal(void);
@@ -13,6 +14,7 @@ int handle_sigaction(void);
 void (*current_handler_sigaction(void))(int);
 int trace_signal_sender(void);
 int main(int argc, char **argv);
+int set_handler(void);
 int pid_exist(pid_t pid);
 
 #endif
