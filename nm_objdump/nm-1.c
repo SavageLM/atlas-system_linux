@@ -39,12 +39,19 @@ int main(int argc, char **argv)
 		close(fd);
 		return (-1);
 	}
+	if (header.Flag_SIG)
+	{
+		fprintf(stderr, "%s: %s: no symbols\n", argv[0], argv[1]);
+		destroy_header(&header);
+		return (0);
+	}
 	if (parse_symbol_header(&header) == -1)
 	{
 		destroy_header(&header);
 		return (-1);
 	}
 	process_symbols(&header);
+	destroy_header(&header);
 	return (0);
 }
 
@@ -74,7 +81,9 @@ int map_header(elf_hdr *header, int fd, char *prog)
 		return (-1);
 	}
 	if (header->Ehdr64->e_ident[EI_DATA] == ELFDATA2MSB)
-		header->Flag_OP = 1;
+		header->Flag_SIG = 1;
+	else
+		header->Flag_SIG = 0;
 	if (header->Ehdr64->e_ident[EI_CLASS] == ELFCLASS64)
 	{
 		header->Flag_OP = 1;
@@ -82,6 +91,7 @@ int map_header(elf_hdr *header, int fd, char *prog)
 	}
 	else
 	{
+		header->Flag_OP = 0;
 		header->fsize32 = (uint32_t)statbuf.st_size;
 		/* map the ELF-file contents to a virtual-memory address */
 		header->Ehdr32 = mmap(NULL, header->fsize32, PROT_READ, MAP_PRIVATE,
@@ -115,9 +125,9 @@ int parse_symbol_header(elf_hdr *header)
 				break;
 			}
 		}
-		if (!header->Shdr64)
+		if (!header->Sym_sh64)
 			return (-1);
-		header->Sym_count64 = SYMBOL_COUNT64(header->Shdr64);
+		header->Sym_count64 = SYMBOL_COUNT64(header->Sym_sh64);
 		header->Sym_tbl_64 = SYMBOL_TABLE64(header->Ehdr64, header->Sym_sh64);
 		header->str_table = STRING_TABLE(header->Ehdr64, header->Shdr64, header->Sym_sh64);
 	}
@@ -133,9 +143,9 @@ int parse_symbol_header(elf_hdr *header)
 				break;
 			}
 		}
-		if (!header->Shdr32)
+		if (!header->Sym_sh32)
 			return (-1);
-		header->Sym_count32 = SYMBOL_COUNT32(header->Shdr32);
+		header->Sym_count32 = SYMBOL_COUNT32(header->Sym_sh32);
 		header->Sym_tbl_32 = SYMBOL_TABLE32(header->Ehdr32, header->Sym_sh32);
 		header->str_table = STRING_TABLE(header->Ehdr32, header->Shdr32, header->Sym_sh32);
 	}
