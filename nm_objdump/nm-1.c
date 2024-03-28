@@ -48,7 +48,8 @@ int main(int argc, char **argv)
 	if (parse_symbol_header(&header) == -1)
 	{
 		destroy_header(&header);
-		return (-1);
+		fprintf(stderr, "%s: %s: no symbols\n", argv[0], argv[1]);
+		return (0);
 	}
 	process_symbols(&header);
 	destroy_header(&header);
