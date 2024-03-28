@@ -14,6 +14,8 @@ void print_symbol(elf_hdr *header, Elf64_Sym *sym64, Elf32_Sym *sym32)
 	if (header->Flag_OP)
 	{
 		type = get_type64(header, sym64);
+		if (type == 'a' || !header->str_table[sym64->st_name])
+			return;
 		if (type == 'w' || type == 'U')
 			printf("%16s ", "");
 		else
@@ -24,6 +26,8 @@ void print_symbol(elf_hdr *header, Elf64_Sym *sym64, Elf32_Sym *sym32)
 	else
 	{
 		type = get_type32(header, sym32);
+		if (type == 'a' || !header->str_table[sym32->st_name])
+			return;
 		if (type == 'w' || type == 'U')
 			printf("%8s ", "");
 		else
