@@ -15,28 +15,30 @@
 
 /**
  * SECTION_HEADERS64 - Fetches pointer to section headers
- * @ehdr: Pointer to ELF header
+ * @Ehdr64: Pointer to ELF header
  * Return: Pointer to first section header
  */
-#define SECTION_HEADERS64(Ehdr64) ((Elf64_Shdr *)OFFSET((Ehdr64), (Ehdr64)->e_shoff))
+#define SECTION_HEADERS64(Ehdr64) ((Elf64_Shdr *)OFFSET((Ehdr64),\
+(Ehdr64)->e_shoff))
 
 /**
  * SECTION_HEADERS32 - Fetches pointer to section headers
- * @ehdr: Pointer to ELF header
+ * @Ehdr32: Pointer to ELF header
  * Return: Pointer to first section header
  */
-#define SECTION_HEADERS32(Ehdr32) ((Elf32_Shdr *)OFFSET((Ehdr32), (Ehdr32)->e_shoff))
+#define SECTION_HEADERS32(Ehdr32) ((Elf32_Shdr *)OFFSET((Ehdr32),\
+(Ehdr32)->e_shoff))
 
 /**
  * SECTION_COUNT64 - Returns the number of section headers
- * @ehdr: Pointer to ELF header
+ * @Ehdr64: Pointer to ELF header
  * Return: Number of section headers
  */
 #define SECTION_COUNT64(Ehdr64) ((uint64_t)(Ehdr64)->e_shnum)
 
 /**
  * SECTION_COUNT32 - Returns the number of section headers
- * @ehdr: Pointer to ELF header
+ * @Ehdr32: Pointer to ELF header
  * Return: Number of section headers
  */
 #define SECTION_COUNT32(Ehdr32) ((uint32_t)(Ehdr32)->e_shnum)

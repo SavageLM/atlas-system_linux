@@ -39,13 +39,7 @@ int main(int argc, char **argv)
 		close(fd);
 		return (-1);
 	}
-	if (header.Flag_SIG)
-	{
-		fprintf(stderr, "%s: %s: no symbols\n", argv[0], argv[1]);
-		destroy_header(&header);
-		return (0);
-	}
-	if (parse_symbol_header(&header) == -1)
+	if (header.Flag_SIG || parse_symbol_header(&header) == -1)
 	{
 		destroy_header(&header);
 		fprintf(stderr, "%s: %s: no symbols\n", argv[0], argv[1]);
@@ -99,56 +93,55 @@ int map_header(elf_hdr *header, int fd, char *prog)
 			header->fd, 0);
 		return (header->Ehdr32 == MAP_FAILED ? -1 : 0);
 	}
-	return(-1);
+	return (-1);
 }
 
 /**
  * parse_symbol_header - Finds symbol-table section header and symbol count
- * @header: Pointer to struct
+ * @hdr: Pointer to struct
  * Return: `0` on success, `-1` on failure
  */
 
-int parse_symbol_header(elf_hdr *header)
+int parse_symbol_header(elf_hdr *hdr)
 {
 	uint64_t i;
 	uint32_t j;
 
-	/* assign section header address and find symbol-table header */
-	if (header->Flag_OP)
+	if (hdr->Flag_OP)
 	{
-		header->Shdr64 = SECTION_HEADERS64(header->Ehdr64);
-		header->Sym_sh64 = NULL;
-		for (i = 0; i < SECTION_COUNT64(header->Ehdr64); ++i)
+		hdr->Shdr64 = SECTION_HEADERS64(hdr->Ehdr64);
+		hdr->Sym_sh64 = NULL;
+		for (i = 0; i < SECTION_COUNT64(hdr->Ehdr64); ++i)
 		{
-			if (header->Shdr64[i].sh_type == SHT_SYMTAB)
+			if (hdr->Shdr64[i].sh_type == SHT_SYMTAB)
 			{
-				header->Sym_sh64 = header->Shdr64 + i;
+				hdr->Sym_sh64 = hdr->Shdr64 + i;
 				break;
 			}
 		}
-		if (!header->Sym_sh64)
+		if (!hdr->Sym_sh64)
 			return (-1);
-		header->Sym_count64 = SYMBOL_COUNT64(header->Sym_sh64);
-		header->Sym_tbl_64 = SYMBOL_TABLE64(header->Ehdr64, header->Sym_sh64);
-		header->str_table = STRING_TABLE(header->Ehdr64, header->Shdr64, header->Sym_sh64);
+		hdr->Sym_count64 = SYMBOL_COUNT64(hdr->Sym_sh64);
+		hdr->Sym_tbl_64 = SYMBOL_TABLE64(hdr->Ehdr64, hdr->Sym_sh64);
+		hdr->str_table = STRING_TABLE(hdr->Ehdr64, hdr->Shdr64, hdr->Sym_sh64);
 	}
 	else
 	{
-		header->Shdr32 = SECTION_HEADERS32(header->Ehdr32);
-		header->Sym_sh32 = NULL;
-		for (j = 0; j < SECTION_COUNT32(header->Ehdr32); ++j)
+		hdr->Shdr32 = SECTION_HEADERS32(hdr->Ehdr32);
+		hdr->Sym_sh32 = NULL;
+		for (j = 0; j < SECTION_COUNT32(hdr->Ehdr32); ++j)
 		{
-			if (header->Shdr32[j].sh_type == SHT_SYMTAB)
+			if (hdr->Shdr32[j].sh_type == SHT_SYMTAB)
 			{
-				header->Sym_sh32 = header->Shdr32 + j;
+				hdr->Sym_sh32 = hdr->Shdr32 + j;
 				break;
 			}
 		}
-		if (!header->Sym_sh32)
+		if (!hdr->Sym_sh32)
 			return (-1);
-		header->Sym_count32 = SYMBOL_COUNT32(header->Sym_sh32);
-		header->Sym_tbl_32 = SYMBOL_TABLE32(header->Ehdr32, header->Sym_sh32);
-		header->str_table = STRING_TABLE(header->Ehdr32, header->Shdr32, header->Sym_sh32);
+		hdr->Sym_count32 = SYMBOL_COUNT32(hdr->Sym_sh32);
+		hdr->Sym_tbl_32 = SYMBOL_TABLE32(hdr->Ehdr32, hdr->Sym_sh32);
+		hdr->str_table = STRING_TABLE(hdr->Ehdr32, hdr->Shdr32, hdr->Sym_sh32);
 	}
 	return (0);
 }

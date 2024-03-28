@@ -11,6 +11,7 @@
 void print_symbol(elf_hdr *header, Elf64_Sym *sym64, Elf32_Sym *sym32)
 {
 	char type;
+
 	if (header->Flag_OP)
 	{
 		type = get_type64(header, sym64);
@@ -83,7 +84,7 @@ char get_type64(elf_hdr *header, Elf64_Sym *sym64)
 }
 
 /**
- * get_nm_type32 - gets type of symbol in one char
+ * get_type32 - gets type of symbol in one char
  * @header: Pointer to struct
  * @sym32: pointer to index of symbol table in 32 bit system
  * Return: the char type
@@ -126,21 +127,3 @@ char get_type32(elf_hdr *header, Elf32_Sym *sym32)
 		c += 32;
 	return (c);
 }
-
-/**
- * convert_bits - Function to convert from lsb to msb
- * @ptr: pointer to first octet of word
- * @size: size of ptr
-
-
-void convert_bits(char *ptr, size_t size)
-{
-	size_t tmp, start, end;
-
-	for (start = 0, end = size - 1; start < end; ++start, --end)
-	{
-		tmp = ptr[start];
-		ptr[start] = ptr[end];
-		ptr[end] = tmp;
-	}
-}*/
