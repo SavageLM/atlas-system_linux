@@ -13,16 +13,16 @@ void print_symbol(elf_hdr *header, Elf64_Sym *sym64, Elf32_Sym *sym32)
 	if (header->Flag_OP)
 	{
 		(void)sym32;
-		printf("%x ", sym64->st_value);
+		printf("%lx ", sym64->st_value);
 		get_type64(header, sym64);
-		printf("%s\n", sym64->st_name);
+		printf("%s\n", header->str_table + sym64->st_name);
 	}
 	else
 	{
 		(void)sym64;
-		printf("%x ", sym32.st_value);
+		printf("%x ", sym32->st_value);
 		get_type32(header, sym32);
-		printf("%s\n", sym32.st_name);
+		printf("%s\n", header->str_table + sym32->st_name);
 	}
 }
 
@@ -37,36 +37,36 @@ char get_type64(elf_hdr *header, Elf64_Sym *sym64)
 {
 	char c;
 
-	if (ELF64_ST_BIND(sysm64->st_info) == STB_GNU_UNIQUE)
+	if (ELF64_ST_BIND(sym64->st_info) == STB_GNU_UNIQUE)
 		c = 'u';
-	else if (ELF64_ST_BIND(sysm64->st_info) == STB_WEAK &&
-		ELF64_ST_TYPE(sysm64->st_info) == STT_OBJECT)
-		c = sysm64->st_shndx == SHN_UNDEF ? 'v' : 'V';
-	else if (ELF64_ST_BIND(sysm64->st_info) == STB_WEAK)
-		c = sysm64->st_shndx == SHN_UNDEF ? 'w' : 'W';
-	else if (sysm64->st_shndx == SHN_UNDEF)
+	else if (ELF64_ST_BIND(sym64->st_info) == STB_WEAK &&
+		ELF64_ST_TYPE(sym64->st_info) == STT_OBJECT)
+		c = sym64->st_shndx == SHN_UNDEF ? 'v' : 'V';
+	else if (ELF64_ST_BIND(sym64->st_info) == STB_WEAK)
+		c = sym64->st_shndx == SHN_UNDEF ? 'w' : 'W';
+	else if (sym64->st_shndx == SHN_UNDEF)
 		c = 'U';
-	else if (sysm64->st_shndx == SHN_ABS)
+	else if (sym64->st_shndx == SHN_ABS)
 		c = 'A';
-	else if (sysm64->st_shndx == SHN_COMMON)
+	else if (sym64->st_shndx == SHN_COMMON)
 		c = 'C';
-	else if (header->Shdr64[sysm64->st_shndx].sh_type == SHT_NOBITS
-			&& header->Shdr64[sysm64->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+	else if (header->Shdr64[sym64->st_shndx].sh_type == SHT_NOBITS
+			&& header->Shdr64[sym64->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
 		c = 'B';
-	else if (header->Shdr64[sysm64->st_shndx].sh_type == SHT_PROGBITS
-			&& header->Shdr64[sysm64->st_shndx].sh_flags == SHF_ALLOC)
+	else if (header->Shdr64[sym64->st_shndx].sh_type == SHT_PROGBITS
+			&& header->Shdr64[sym64->st_shndx].sh_flags == SHF_ALLOC)
 		c = 'R';
-	else if (header->Shdr64[sysm64->st_shndx].sh_type == SHT_PROGBITS
-			&& header->Shdr64[sysm64->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+	else if (header->Shdr64[sym64->st_shndx].sh_type == SHT_PROGBITS
+			&& header->Shdr64[sym64->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
 		c = 'D';
-	else if (header->Shdr64[sysm64->st_shndx].sh_type == SHT_PROGBITS
-			&& header->Shdr64[sysm64->st_shndx].sh_flags == (SHF_ALLOC | SHF_EXECINSTR))
+	else if (header->Shdr64[sym64->st_shndx].sh_type == SHT_PROGBITS
+			&& header->Shdr64[sym64->st_shndx].sh_flags == (SHF_ALLOC | SHF_EXECINSTR))
 		c = 'T';
-	else if (header->Shdr64[sysm64->st_shndx].sh_type == SHT_DYNAMIC)
+	else if (header->Shdr64[sym64->st_shndx].sh_type == SHT_DYNAMIC)
 		c = 'D';
 	else
 		c = 'T';
-	if (ELF64_ST_BIND(sysm64->st_info) == STB_LOCAL && c != '?')
+	if (ELF64_ST_BIND(sym64->st_info) == STB_LOCAL && c != '?')
 		c += 32;
 	return (c);
 }
@@ -82,36 +82,36 @@ char get_type32(elf_hdr *header, Elf32_Sym *sym32)
 {
 	char  c;
 
-	if (ELF32_ST_BIND(sysm32->st_info) == STB_GNU_UNIQUE)
+	if (ELF32_ST_BIND(sym32->st_info) == STB_GNU_UNIQUE)
 		c = 'u';
-	else if (ELF32_ST_BIND(sysm32->st_info) == STB_WEAK &&
-		ELF32_ST_TYPE(sysm32->st_info) == STT_OBJECT)
-		c = sysm32->st_shndx == SHN_UNDEF ? 'v' : 'V';
-	else if (ELF32_ST_BIND(sysm32->st_info) == STB_WEAK)
-		c = sysm32->st_shndx == SHN_UNDEF ? 'w' : 'W';
-	else if (sysm32->st_shndx == SHN_UNDEF)
+	else if (ELF32_ST_BIND(sym32->st_info) == STB_WEAK &&
+		ELF32_ST_TYPE(sym32->st_info) == STT_OBJECT)
+		c = sym32->st_shndx == SHN_UNDEF ? 'v' : 'V';
+	else if (ELF32_ST_BIND(sym32->st_info) == STB_WEAK)
+		c = sym32->st_shndx == SHN_UNDEF ? 'w' : 'W';
+	else if (sym32->st_shndx == SHN_UNDEF)
 		c = 'U';
-	else if (sysm32->st_shndx == SHN_ABS)
+	else if (sym32->st_shndx == SHN_ABS)
 		c = 'A';
-	else if (sysm32->st_shndx == SHN_COMMON)
+	else if (sym32->st_shndx == SHN_COMMON)
 		c = 'C';
-	else if (header->Shdr32[sysm32->st_shndx].sh_type == SHT_NOBITS
-			&& header->Shdr32[sysm32->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+	else if (header->Shdr32[sym32->st_shndx].sh_type == SHT_NOBITS
+			&& header->Shdr32[sym32->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
 		c = 'B';
-	else if (header->Shdr32[sysm32->st_shndx].sh_type == SHT_PROGBITS
-			&& header->Shdr32[sysm32->st_shndx].sh_flags == SHF_ALLOC)
+	else if (header->Shdr32[sym32->st_shndx].sh_type == SHT_PROGBITS
+			&& header->Shdr32[sym32->st_shndx].sh_flags == SHF_ALLOC)
 		c = 'R';
-	else if (header->Shdr32[sysm32->st_shndx].sh_type == SHT_PROGBITS
-			&& header->Shdr32[sysm32->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+	else if (header->Shdr32[sym32->st_shndx].sh_type == SHT_PROGBITS
+			&& header->Shdr32[sym32->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
 		c = 'D';
-	else if (header->Shdr32[sysm32->st_shndx].sh_type == SHT_PROGBITS
-			&& header->Shdr32[sysm32->st_shndx].sh_flags == (SHF_ALLOC | SHF_EXECINSTR))
+	else if (header->Shdr32[sym32->st_shndx].sh_type == SHT_PROGBITS
+			&& header->Shdr32[sym32->st_shndx].sh_flags == (SHF_ALLOC | SHF_EXECINSTR))
 		c = 'T';
-	else if (header->Shdr32[sysm32->st_shndx].sh_type == SHT_DYNAMIC)
+	else if (header->Shdr32[sym32->st_shndx].sh_type == SHT_DYNAMIC)
 		c = 'D';
 	else
 		c = 'T';
-	if (ELF32_ST_BIND(sysm32->st_info) == STB_LOCAL && c != '?')
+	if (ELF32_ST_BIND(sym32->st_info) == STB_LOCAL && c != '?')
 		c += 32;
 	return (c);
 }

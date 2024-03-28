@@ -52,8 +52,8 @@ typedef struct elf_hdr
 
 /*Prototypes*/
 int main(int argc, char **argv);
-static int map_header(elf_hdr *header, int fd, char *prog);
-static int parse_symbol_header(elf_hdr *header);
+int map_header(elf_hdr *header, int fd, char *prog);
+int parse_symbol_header(elf_hdr *header);
 void destroy_header(elf_hdr *header);
 void process_symbols(elf_hdr *header);
 void process_symbols(elf_hdr *header);

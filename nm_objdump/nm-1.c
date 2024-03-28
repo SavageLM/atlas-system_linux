@@ -34,17 +34,17 @@ int main(int argc, char **argv)
 				argv[0], argv[1]);
 		return (-1);
 	}
-	if (map_header(*header, fd, *argv) == -1)
+	if (map_header(&header, fd, *argv) == -1)
 	{
 		close(fd);
 		return (-1);
 	}
-	if (parse_symbol_header(*header) == -1)
+	if (parse_symbol_header(&header) == -1)
 	{
-		destroy_header(header);
+		destroy_header(&header);
 		return (-1);
 	}
-	process_symbols(*header);
+	process_symbols(&header);
 	return (0);
 }
 
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
  * Return: `0` on success, `-1` on failure
  */
 
-static int map_header(elf_hdr *header, int fd, char *prog)
+int map_header(elf_hdr *header, int fd, char *prog)
 {
 	struct stat statbuf;
 
@@ -97,7 +97,7 @@ static int map_header(elf_hdr *header, int fd, char *prog)
  * Return: `0` on success, `-1` on failure
  */
 
-static int parse_symbol_header(elf_hdr *header)
+int parse_symbol_header(elf_hdr *header)
 {
 	uint64_t i;
 	uint32_t j;
@@ -105,13 +105,13 @@ static int parse_symbol_header(elf_hdr *header)
 	/* assign section header address and find symbol-table header */
 	if (header->Flag_OP)
 	{
-		header->Shdr64 = SECTION_HEADERS64(header->Shdr64);
+		header->Shdr64 = SECTION_HEADERS64(header->Ehdr64);
 		header->Sym_sh64 = NULL;
 		for (i = 0; i < SECTION_COUNT64(header->Ehdr64); ++i)
 		{
 			if (header->Shdr64[i].sh_type == SHT_SYMTAB)
 			{
-				header->Sym_count64 = header->Shdr64 + i;
+				header->Sym_sh64 = header->Shdr64 + i;
 				break;
 			}
 		}
@@ -123,13 +123,13 @@ static int parse_symbol_header(elf_hdr *header)
 	}
 	else
 	{
-		header->Shdr32 = SECTION_HEADERS32(header->Shdr32);
+		header->Shdr32 = SECTION_HEADERS32(header->Ehdr32);
 		header->Sym_sh32 = NULL;
 		for (j = 0; j < SECTION_COUNT32(header->Ehdr32); ++j)
 		{
 			if (header->Shdr32[j].sh_type == SHT_SYMTAB)
 			{
-				header->Sym_count32 = header->Shdr32 + j;
+				header->Sym_sh32 = header->Shdr32 + j;
 				break;
 			}
 		}
