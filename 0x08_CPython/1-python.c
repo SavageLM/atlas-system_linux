@@ -20,7 +20,7 @@ void print_python_list(PyObject *p)
 	length = PyObject_Length(p);
 	list = (PyListObject *)p;
 	printf("[*] Python list info\n"
-			"[*]Size of Python list = %ld\n"
+			"[*] Size of the Python list = %ld\n"
 			"[*] Allocated = %ld\n", length, list->allocated);
 	for (i = 0; i < length; i++)
 	{
