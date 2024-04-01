@@ -12,7 +12,7 @@ void print_python_list(PyObject *p)
 {
 	PyObject *item = NULL;
 	PyListObject *list = NULL;
-	Py_ssize_t length, i;
+	Py_ssize_t length, i = 0;
 	const char *type = NULL;
 
 	if (!p || !PyList_Check(p))
