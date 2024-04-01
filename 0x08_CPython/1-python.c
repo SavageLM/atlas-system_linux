@@ -12,7 +12,7 @@ void print_python_list(PyObject *p)
 {
 	PyObject *item = NULL;
 	PyListObject *list = NULL;
-	Py_ssize_t length, i = 0;
+	Py_ssize_t length, i;
 	const char *type = NULL;
 
 	if (!p || !PyList_Check(p))
@@ -22,7 +22,7 @@ void print_python_list(PyObject *p)
 	printf("[*] Python list info\n"
 			"[*]Size of Python list = %ld\n"
 			"[*] Allocated = %ld\n", length, list->allocated);
-	for (i; i < length; i++)
+	for (i = 0; i < length; i++)
 	{
 		item = list->ob_item[i];
 		type = item->ob_type->tp_name;
