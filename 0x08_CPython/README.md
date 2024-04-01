@@ -19,7 +19,7 @@
 | **File** | *__Description__* |
 |----------|----------------:|
 |0-python_lists_bigO| Contains the Big O notation for several operations|
-|
+|1-python.c| Contains function to print python list info|
 
 #### Authors
 Logan Savage
