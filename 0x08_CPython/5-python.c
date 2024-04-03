@@ -13,7 +13,7 @@ void print_python_int(PyObject *p)
 	PyLongObject *num;
 	ssize_t size, i;
 	int neg = 0, int_shift;
-	unsigned long total, current;
+	unsigned long total = 0, current;
 
 	if (!p || !PyLong_Check(p))
 	{
