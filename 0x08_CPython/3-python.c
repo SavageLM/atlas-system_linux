@@ -28,6 +28,10 @@ void print_python_list(PyObject *p)
 		item = list->ob_item[i];
 		type = item->ob_type->tp_name;
 		printf("Element %ld: %s\n", i, type);
+		if (item->ob_type == &PyBytes_Type)
+			print_python_bytes(item);
+		else if (item->ob_type == &PyFloat_Type)
+			print_python_float(item);
 	}
 }
 
