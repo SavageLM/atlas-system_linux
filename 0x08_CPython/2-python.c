@@ -16,18 +16,23 @@ void print_python_list(PyObject *p)
 	Py_ssize_t length, i;
 	const char *type = NULL;
 
+	printf("[*] Python list info\n");
 	if (!p || !PyList_Check(p))
+	{
+		printf("  [ERROR] Invalid List Object\n");
 		return;
+	}
 	length = PyObject_Length(p);
 	list = (PyListObject *)p;
-	printf("[*] Python list info\n"
-			"[*] Size of the Python List = %ld\n"
+	printf("[*] Size of the Python List = %ld\n"
 			"[*] Allocated = %ld\n", length, list->allocated);
 	for (i = 0; i < length; i++)
 	{
 		item = list->ob_item[i];
 		type = item->ob_type->tp_name;
 		printf("Element %ld: %s\n", i, type);
+		if (item->ob_type == &PyBytes_Type)
+			print_python_bytes(item);
 	}
 }
 
