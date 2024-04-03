@@ -20,7 +20,7 @@ void print_python_list(PyObject *p)
 	printf("[*] Python list info\n");
 	if (!p || !PyList_Check(p))
 	{
-		printf("  [ERROR] Invalid Bytes Object\n");
+		printf("  [ERROR] Invalid List Object\n");
 		return;
 	}
 	length = PyObject_Length(p);
