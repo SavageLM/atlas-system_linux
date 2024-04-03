@@ -12,15 +12,15 @@ void print_python_int(PyObject *p)
 {
 	PyLongObject *num;
 	ssize_t size, i;
-	int neg, int_shift;
+	int neg = 0, int_shift;
 	unsigned long total, current;
 
-	num = (PyLongObject *)p;
 	if (!p || !PyLong_Check(p))
 	{
 		printf("Invalid Int Object\n");
 		return;
 	}
+	num = (PyLongObject *)p;
 	size = ((PyVarObject *)p)->ob_size;
 	if (size < 0)
 		neg = 1;
