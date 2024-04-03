@@ -12,6 +12,7 @@ void print_python_string(PyObject *p)
 {
 	PyASCIIObject *str;
 
+	str = (PyASCIIObject *)p;
 	wprintf(L"[.] string object info\n");
 	if (!p || !PyUnicode_Check(p))
 	{
