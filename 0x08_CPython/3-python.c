@@ -17,12 +17,15 @@ void print_python_list(PyObject *p)
 	Py_ssize_t length, i;
 	const char *type = NULL;
 
+	printf("[*] Python list info\n");
 	if (!p || !PyList_Check(p))
+	{
+		printf("  [ERROR] Invalid Bytes Object\n");
 		return;
+	}
 	length = PyObject_Length(p);
 	list = (PyListObject *)p;
-	printf("[*] Python list info\n"
-			"[*] Size of the Python List = %ld\n"
+	printf("[*] Size of the Python List = %ld\n"
 			"[*] Allocated = %ld\n", length, list->allocated);
 	for (i = 0; i < length; i++)
 	{
