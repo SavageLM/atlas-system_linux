@@ -33,8 +33,7 @@ void print_python_string(PyObject *p)
 	for (i = 0; i < size; i++)
 	{
 		int_shift = PyLong_SHIFT * i;
-		unsigned long current =
-			((unsigned long)num->ob_digit[i]) * (1UL << (int_shift));
+		current = ((unsigned long)num->ob_digit[i]) * (1UL << (int_shift));
 		total += current;
 	}
 	if (neg)
