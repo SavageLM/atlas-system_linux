@@ -23,6 +23,7 @@
 |2-python.c| Addes Function for byte info to 1-python|
 |3-python.c| Adds function for float info to 1-python|
 |4-python.c| Function to print Python strings|
+|5-python.c| Function for printing python integers|
 
 #### Authors
 Logan Savage
