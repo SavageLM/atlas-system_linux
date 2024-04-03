@@ -20,8 +20,9 @@
 |----------|----------------:|
 |0-python_lists_bigO| Contains the Big O notation for several operations|
 |1-python.c| Contains function to print python list info|
-|2-python.c| Contains functions for printing list info an byte info|
-|
+|2-python.c| Addes Function for byte info to 1-python|
+|3-python.c| Adds function for float info to 1-python|
+|4-python.c| Function to print Python strings|
 
 #### Authors
 Logan Savage
