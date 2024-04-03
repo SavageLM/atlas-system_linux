@@ -8,7 +8,7 @@ void print_python_int(PyObject *p);
  * print_python_int - Function to print python integers
  * @p: pointer to python object to print
 */
-void print_python_string(PyObject *p)
+void print_python_int(PyObject *p)
 {
 	PyLongObject *num;
 	ssize_t size, i;
