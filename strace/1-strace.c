@@ -35,7 +35,7 @@ int main(int argc, const char *argv[], char *const envp[])
 				break;
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
 			if (print_check == 0 || print_check % 2 != 0)
-				fprintf(stderr, "%lu\n", (size_t)regs.orig_rax);
+				fprintf(stderr, "%s\n", syscalls_64_g[regs.orig_rax].name);
 			print_check++;
 		}
 	}
