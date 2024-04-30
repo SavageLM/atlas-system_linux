@@ -5,7 +5,7 @@ SRC = $(wildcard *.c)
 0 = $(patsubst %.c, %.o, $(wildcard 0-*.c))
 1 = $(patsubst %.c, %.o, $(wildcard 1-*.c))
 2 = $(patsubst %.c, %.o, $(wildcard 2-*.c))
-2 = $(patsubst %.c, %.o, $(wildcard 3-*.c))
+3 = $(patsubst %.c, %.o, $(wildcard 3-*.c))
 
 .PHONY: strace_0 strace_1 strace_2 strace_3 clean
 
