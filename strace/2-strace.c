@@ -33,6 +33,7 @@ int main(int argc, const char *argv[], char *const envp[])
 			ptrace(PT_SYSCALL, child, NULL, NULL);
 			wait(&status);
 			if (WIFEXITED(status))
+				fprintf(stderr, "%s = ?\n", sysname);
 				break;
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
 			sysname = syscalls_64_g[regs.orig_rax].name;
