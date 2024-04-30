@@ -2,7 +2,7 @@
 
 /**
  * main - entrance to program
- * @arc: Number of arguments
+ * @argc: Number of arguments
  * @argv: array of arguments
  * @envp: Environ variable
  * Return: returns -1 on fail, else 0
