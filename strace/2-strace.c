@@ -32,11 +32,13 @@ int main(int argc, const char *argv[], char *const envp[])
 		{
 			ptrace(PT_SYSCALL, child, NULL, NULL);
 			wait(&status);
-			if (WIFEXITED(status))
-				fprintf(stderr, "%s = ?\n", sysname);
-				break;
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
 			sysname = syscalls_64_g[regs.orig_rax].name;
+			if (WIFEXITED(status))
+			{
+				fprintf(stderr, "%s = ?\n", sysname);
+				break;
+			}
 			if (print_check == 0 || print_check % 2 != 0)
 				fprintf(stderr, "%s = %#lx\n", sysname, (size_t)regs.rax);
 			print_check++;
