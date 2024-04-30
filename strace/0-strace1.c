@@ -11,7 +11,7 @@
 int main(int argc, const char *argv[], char *const envp[])
 {
 	pid_t child;
-	int status;
+	int status, print_check = 0;
 	struct user_regs_struct regs;
 
 	if (argc < 2)
@@ -34,7 +34,9 @@ int main(int argc, const char *argv[], char *const envp[])
 			if (WIFEXITED(status))
 				break;
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
-			printf("%lu\n", (size_t)regs.orig_rax);
+			if (print_check == 1 || print_check % 2 != 0)
+				printf("%lu\n", (size_t)regs.orig_rax);
+			print_check++;
 		}
 	}
 	return (0);
