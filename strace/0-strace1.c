@@ -22,6 +22,7 @@ int main(int argc, const char *argv[], char *const envp[])
 	child = fork();
 	if (child == 0)
 	{
+		fprintf(stderr, "59\n"); /**execv call*/
 		ptrace(PTRACE_TRACEME, child, NULL, NULL);
 		execve(argv[1], (char * const *)(argv + 1), (char * const *)envp);
 	}
