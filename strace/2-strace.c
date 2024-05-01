@@ -46,7 +46,7 @@ int main(int argc, const char *argv[], char *const envp[])
 				if (regs.orig_rax != 1)
 					fprintf(stderr, " = %#lx\n", (size_t)regs.rax);
 				else
-					fprintf(stderr, "\n = %#lx", (size_t)regs.rax);
+					fprintf(stderr, "\n = %#lx\n", (size_t)regs.rax);
 			}
 			print_check++;
 		}
