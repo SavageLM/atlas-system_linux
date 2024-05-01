@@ -39,10 +39,11 @@ int main(int argc, const char *argv[], char *const envp[])
 				fprintf(stderr, "%s = ?\n", sysname);
 				break;
 			}
-			if (print_check == 0 || print_check % 2 != 0)
+			if (print_check % 2 == 0)
 				fprintf(stderr, "%s = %#lx\n", sysname, (size_t)regs.rax);
 			print_check++;
 		}
+		fprintf(stderr, "exit = ?\n");
 	}
 	return (0);
 }
