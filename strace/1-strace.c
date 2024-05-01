@@ -36,7 +36,12 @@ int main(int argc, const char *argv[], char *const envp[])
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
 			
 			if (print_check == 0 || print_check % 2 != 0)
-				fprintf(stderr, "%s", syscalls_64_g[regs.orig_rax].name);
+			{
+				if (regs.orig_rax !=1)
+					fprintf(stderr, "%s\n", syscalls_64_g[regs.orig_rax].name);
+				else
+					fprintf(stderr, "%s", syscalls_64_g[regs.orig_rax].name);
+			}
 			if (print_check % 2 == 0 && regs.orig_rax == 1)
 				fprintf(stderr, "\n");
 			print_check++;
