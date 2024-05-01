@@ -35,10 +35,7 @@ int main(int argc, const char *argv[], char *const envp[])
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
 			sysname = syscalls_64_g[regs.orig_rax].name;
 			if (WIFEXITED(status))
-			{
-				fprintf(stderr, "%s = ?\n", sysname);
 				break;
-			}
 			if (print_check == 0 || print_check % 2 != 0)
 				fprintf(stderr, "%s", sysname);
 			if (print_check % 2 == 0)
@@ -46,7 +43,7 @@ int main(int argc, const char *argv[], char *const envp[])
 				if (regs.orig_rax != 1)
 					fprintf(stderr, " = %#lx\n", (size_t)regs.rax);
 				else
-					fprintf(stderr, "\n = %#lx\n", (size_t)regs.rax);
+					fprintf(stderr, " = %#lx\n", (size_t)regs.rax);
 			}
 			print_check++;
 		}
