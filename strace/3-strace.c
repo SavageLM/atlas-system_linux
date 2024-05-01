@@ -44,7 +44,12 @@ int main(int argc, const char *argv[], char *const envp[])
 			{
 				fprintf(stderr, "%s(", SYSNAME);
 				for (i = 0; i < SYSPARAM; i++)
-					print_params(i, &regs);
+				{
+					if (SYSTYPE == VOID)
+						continue;
+					else
+						print_params(i, &regs);
+				}
 			}
 			if (print_check % 2 == 0)
 				fprintf(stderr, ") = %#lx\n", (size_t)regs.rax);
