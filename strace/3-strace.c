@@ -1,5 +1,7 @@
 #include "syscalls.h"
 
+void print_params(size_t i, struct user_regs_struct *regs);
+
 /**
  * main - entrance to program
  * @argc: Number of arguments
@@ -12,6 +14,7 @@ int main(int argc, const char *argv[], char *const envp[])
 {
 	pid_t child;
 	int status, print_check = 0;
+	size_t i =0;
 	struct user_regs_struct regs;
 
 	if (argc < 2)
@@ -38,16 +41,48 @@ int main(int argc, const char *argv[], char *const envp[])
 				break;
 			}
 			if (print_check == 0 || print_check % 2 != 0)
-				fprintf(stderr, "%s", SYSNAME);
+				fprintf(stderr, "%s(", SYSNAME);
 			if (print_check % 2 == 0)
 			{
 				if (regs.orig_rax != 1)
-					fprintf(stderr, " = %#lx\n", (size_t)regs.rax);
+				{
+					for (i = 0; i < SYSPARAM; i++)
+						print_params(i, &regs);
+				if (regs.orig_rax != 1)
+					fprintf(stderr, ") = %#lx\n", (size_t)regs.rax);
 				else
-					fprintf(stderr, " = %#lx\n", (size_t)regs.rax);
+					fprintf(stderr, ") = %#lx\n", (size_t)regs.rax);
+				}
 			}
 			print_check++;
 		}
 	}
 	return (0);
+}
+
+void print_params(size_t i, struct user_regs_struct *regs)
+{
+	switch (i)
+	{
+		case 0:
+			fprintf(stderr, "%#lx,", (size_t)regs->rdi);
+			return;
+		case 1:
+			fprintf(stderr, " %#lx,", (size_t)regs->rsi);
+			return;
+		case 2:
+			fprintf(stderr, " %#lx,", (size_t)regs->rdx);
+			return;
+		case 3:
+			fprintf(stderr, " %#lx,", (size_t)regs->rcx);
+			return;
+		case 4:
+			fprintf(stderr, " %#lx,", (size_t)regs->r8);
+			return;
+		case 5:
+			fprintf(stderr, " %#lx", (size_t)regs->r9);
+			return;
+		default:
+			return;
+	}
 }

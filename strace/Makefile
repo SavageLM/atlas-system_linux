@@ -18,7 +18,7 @@ strace_1: $(1)
 strace_2: $(2)
 	$(CC) $(CFLAGS) $(2) -o strace_2
 
-strace_3: $(2)
+strace_3: $(3)
 	$(CC) $(CFLAGS) $(3) -o strace_3
 
 clean:

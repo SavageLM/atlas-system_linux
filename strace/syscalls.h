@@ -11,6 +11,9 @@
 #include <sys/user.h>
 #include <sys/reg.h>
 
+#define SYSNAME syscalls_64_g[regs.orig_rax].name
+#define SYSPARAM syscalls_64_g[regs.orig_rax].nb_params
+
 /* Normally, MAX_PARAMS is always 6 */
 # define MAX_PARAMS	6
 
