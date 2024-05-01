@@ -37,7 +37,7 @@ int main(int argc, const char *argv[], char *const envp[])
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
 			if (WIFEXITED(status))
 			{
-				fprintf(stderr, " = ?\n");
+				fprintf(stderr, "0) = ?\n");
 				break;
 			}
 			if (print_check == 0 || print_check % 2 != 0)
