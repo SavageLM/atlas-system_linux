@@ -43,7 +43,6 @@ int main(int argc, const char *argv[], char *const envp[])
 				fprintf(stderr, "%s = %#lx\n", sysname, (size_t)regs.rax);
 			print_check++;
 		}
-		fprintf(stderr, "exit = ?\n");
 	}
 	return (0);
 }
