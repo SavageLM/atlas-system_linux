@@ -47,6 +47,8 @@ int main(int argc, const char *argv[], char *const envp[])
 				{
 					if (SYSTYPE == VOID)
 						continue;
+					if (SYSTYPE == VARARGS)
+						fprintf(stderr, ", ...");
 					else
 						print_params(i, &regs);
 				}
