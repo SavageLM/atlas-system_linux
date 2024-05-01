@@ -68,7 +68,7 @@ void print_params(size_t i, struct user_regs_struct *regs)
 			fprintf(stderr, ", %#lx", (size_t)regs->rdx);
 			return;
 		case 3:
-			fprintf(stderr, ", %#lx", (size_t)regs->rcx);
+			fprintf(stderr, ", %#lx", (size_t)regs->r10);
 			return;
 		case 4:
 			fprintf(stderr, ", %#lx", (size_t)regs->r8);
