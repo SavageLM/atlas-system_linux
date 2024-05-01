@@ -38,6 +38,7 @@ int main(int argc, const char *argv[], char *const envp[])
 			{
 				fprintf(stderr, " = ?\n");
 				break;
+			}
 			if (print_check == 0 || print_check % 2 != 0)
 				fprintf(stderr, "%s", sysname);
 			if (print_check % 2 == 0)
