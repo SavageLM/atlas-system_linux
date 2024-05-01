@@ -39,8 +39,15 @@ int main(int argc, const char *argv[], char *const envp[])
 				fprintf(stderr, "%s = ?\n", sysname);
 				break;
 			}
+			if (print_check == 0 || print_check % 2 != 0)
+				fprintf(stderr, "%s", sysname);
 			if (print_check % 2 == 0)
-				fprintf(stderr, "%s = %#lx\n", sysname, (size_t)regs.rax);
+			{
+				if (regs.orig_rax != 1)
+					fprintf(stderr, " = %#lx\n", (size_t)regs.rax);
+				else
+					fprintf(stderr, "%s", sysname);
+			}
 			print_check++;
 		}
 	}
