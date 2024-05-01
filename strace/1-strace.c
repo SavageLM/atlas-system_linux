@@ -34,8 +34,11 @@ int main(int argc, const char *argv[], char *const envp[])
 			if (WIFEXITED(status))
 				break;
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
+			
 			if (print_check == 0 || print_check % 2 != 0)
-				fprintf(stderr, "%s\n", syscalls_64_g[regs.orig_rax].name);
+				fprintf(stderr, "%s", syscalls_64_g[regs.orig_rax].name);
+			if (print_check % 2 == 0 && regs.orig_rax == 1)
+				fprintf(stderr, "\n");
 			print_check++;
 		}
 	}
