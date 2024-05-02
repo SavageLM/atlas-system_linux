@@ -3,6 +3,7 @@
 /**
  * thread_entry - Function that makes a thread print a str
  * @arg: Address of the string to print
+ * Return: NULL pointer
 */
 
 void *thread_entry(void *arg)
