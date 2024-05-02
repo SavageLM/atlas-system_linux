@@ -1,7 +1,7 @@
 #include "multithreading.h"
 
 /**
- * tprint - Function to print thread ID and a str
+ * tprintf - Function to print thread ID and a str
  * @format: String to print
  * Return: NULL pointer
 */
