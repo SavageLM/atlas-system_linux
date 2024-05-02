@@ -20,6 +20,7 @@
 |----------|----------------:|
 |multithreading.h| Header file for Programs|
 |0-stthread_entry.c| FUnction for making a thread print a string|
+|1-tprintf.c| Function that prints thread ID and a string|
 
 #### Authors
 Logan Savage
