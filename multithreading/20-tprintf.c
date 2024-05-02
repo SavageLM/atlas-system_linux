@@ -16,7 +16,7 @@ int tprintf(char const *format, ...)
 	pthread_t tid = pthread_self();
 	va_list arg;
 
-	va_start(arg,format);
+	va_start(arg, format);
 
 	pthread_mutex_lock(&lock);
 	printf("[%ld] ", tid);
@@ -24,7 +24,6 @@ int tprintf(char const *format, ...)
 	va_end(arg);
 	pthread_mutex_unlock(&lock);
 	return (0);
-
 }
 
 /**
