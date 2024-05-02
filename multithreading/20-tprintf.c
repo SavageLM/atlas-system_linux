@@ -1,9 +1,9 @@
 #include "multithreading.h"
 
-pthread_mutex_t lock;
-
 void make_lock(void) __attribute__((constructor));
 void break_lock(void) __attribute__((destructor));
+
+pthread_mutex_t lock;
 
 /**
  * tprintf - Function to print a str using mutex

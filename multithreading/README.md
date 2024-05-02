@@ -22,6 +22,7 @@
 |0-stthread_entry.c| FUnction for making a thread print a string|
 |1-tprintf.c| Function that prints thread ID and a string|
 |20-tprintf.c| Function to print a string while using mutex|
+|21-prime_factors.c| Function for listing prime factors|
 
 #### Authors
 Logan Savage
