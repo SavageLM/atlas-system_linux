@@ -1,8 +1,6 @@
 #ifndef MULTITHREADING_H
 #define MULTITHREADING_H
 
-#define _GNU_SOURCE
-
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>

@@ -8,8 +8,8 @@
 
 int tprintf(char const *format, ...)
 {
-	pid_t tid = gettid();
+	pthread_t tid = pthread_self();
 
-	printf("[%d] %s", tid, (char *)format);
+	printf("[%ld] %s", tid, (char *)format);
 	pthread_exit(NULL);
 }
