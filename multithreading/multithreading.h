@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include <strings.h>
 #include <pthread.h>
 #include <unistd.h>

@@ -2,8 +2,8 @@
 
 pthread_mutex_t lock;
 
-void make_lock (void) __attribute__((constructor));
-void break_lock (void) __attribute__((destructor));
+void make_lock(void) __attribute__((constructor));
+void break_lock(void) __attribute__((destructor));
 
 /**
  * tprintf - Function to print a str using mutex
@@ -14,9 +14,14 @@ void break_lock (void) __attribute__((destructor));
 int tprintf(char const *format, ...)
 {
 	pthread_t tid = pthread_self();
+	va_list arg;
+
+	va_start(arg,format);
 
 	pthread_mutex_lock(&lock);
-	printf("[%ld] %s", tid, (char *)format);
+	printf("[%ld] ", tid);
+	vprintf(format, arg);
+	va_end(arg);
 	pthread_mutex_unlock(&lock);
 	return (0);
 
