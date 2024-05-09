@@ -1,3 +1,4 @@
 *-main.c
 0-thread_entry
 1-tprintf
+21-prime_factors
