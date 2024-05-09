@@ -39,6 +39,7 @@ void destroy_task(task_t *task)
 /**
  * exec_tasks - executes tasks
  * @tasks: list of tasks
+ * Return: Null
  */
 void *exec_tasks(list_t const *tasks)
 {
