@@ -14,7 +14,7 @@
  * @argv: array of args
  * Return: 0 on success
 */
-int main(int argc, const char *argv)
+int main(int argc, const char **argv)
 {
 	int client_fd;
 	struct sockaddr_in server_add;
