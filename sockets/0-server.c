@@ -30,9 +30,9 @@ int main(void)
 	printf("Listening on Port 12345");
 	if (listen(socket_fd, 5) < 0)
 		perror("listen failed"), exit(EXIT_FAILURE);
-	
-	while(1)
+
+	while (1)
 		;
-	
+
 	return (0);
 }
