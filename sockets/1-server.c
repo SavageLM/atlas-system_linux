@@ -31,8 +31,9 @@ int main(void)
 	printf("Big Brother Listening on Port 12345");
 	if (listen(socket_fd, 5) < 0)
 		perror("listen failed"), exit(EXIT_FAILURE);
-	
-	if ((new_con = accept(socket_fd, (struct sockaddr*)&address, &addrlen)) < 0)
+
+	new_con = accept(socket_fd, (struct sockaddr *)&address, &addrlen);
+	if (new_con < 0)
 		perror("accept failed"), exit(EXIT_FAILURE);
 	printf("IP address is: %s\n", inet_ntoa(address.sin_addr));
 	return (0);
