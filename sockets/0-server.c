@@ -22,12 +22,13 @@ int main(void)
 
 	address.sin_family = AF_INET;
 	address.sin_port = htons(12345);
-	address.sin_addr.s_addr = htonl(INADDR_ANY);
+	address.sin_addr.s_addr = INADDR_ANY;
 
 	if (bind(socket_fd, (struct sockaddr *)&address, sizeof(address)) < 0)
 		perror("bind failed"), exit(EXIT_FAILURE);
 
 	printf("Listening on Port 12345");
-	listen(socket_fd, 5);
+	if (listen(socket_fd, 5) < 0)
+		perror("listen failed"), exit(EXIT_FAILURE);
 	return (0);
 }
