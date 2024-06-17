@@ -34,4 +34,6 @@ int main(int argc, const char **argv)
 		printf("Failed to Connect\n");
 	printf("Big Brother is in your walls now...\n");
 	close(client_fd);
+
+	return (0);
 }
