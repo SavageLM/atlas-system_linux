@@ -28,4 +28,5 @@ int main(void)
 		perror("bind failed"), exit(EXIT_FAILURE);
 
 	listen(socket_fd, 5);
+	return (0);
 }
