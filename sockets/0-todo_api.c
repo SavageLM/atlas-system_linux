@@ -15,7 +15,7 @@ int main(void)
 {
 	int socket_fd, new_con;
 	size_t bytes = 0;
-	char buffer[4096;
+	char buffer[4096];
 	struct sockaddr_in address;
 	socklen_t addrlen = sizeof(address);
 
