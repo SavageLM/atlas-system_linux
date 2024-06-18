@@ -40,9 +40,9 @@ int main(void)
 		bytes = recv(new_con, buffer, 4096, 0);
 		if (bytes > 0)
 		{
-			printf("Raw request: \"%s\"\n", buffer);
+			printf("Raw request: \"%s\"\n", buffer), fflush(stdout);
 			sscanf(buffer, "%s %s %s", meth, path, ver);
-			printf("Method: %s\nPath: %s\nVersion: %s\n", meth, path,ver);
+			printf("Method: %s\nPath: %s\nVersion: %s\n", meth, path,ver), fflush(stdout);
 		}
 		send(new_con, sent, sizeof(sent), 0);
 		close(new_con);
