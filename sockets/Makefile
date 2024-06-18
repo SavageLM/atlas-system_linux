@@ -12,7 +12,7 @@ SRC = $(wildcard *.c)
 .PHONY: todo_api_0 todo_api_1 todo_api_2 todo_api_3 todo_api_4 todo_api_5 clean
 
 todo_api_0: $(0)
-	$(CC) $(CFLAGS) 0-todo_api.c -o todo_api_1
+	$(CC) $(CFLAGS) 0-todo_api.c -o todo_api_0
 
 todo_api_1: $(1)
 	$(CC) $(CFLAGS) $(1) -o todo_api_1
