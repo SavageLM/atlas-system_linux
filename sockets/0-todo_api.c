@@ -13,8 +13,9 @@
 */
 int main(void)
 {
-	int socket_fd, new_con, wait;
-	char buffer[1024];
+	int socket_fd, new_con;
+	size_t bytes = 0;
+	char buffer[4096;
 	struct sockaddr_in address;
 	socklen_t addrlen = sizeof(address);
 
@@ -25,16 +26,16 @@ int main(void)
 	address.sin_addr.s_addr = INADDR_ANY;
 	if (bind(socket_fd, (struct sockaddr *)&address, sizeof(address)) < 0)
 		perror("bind failed"), exit(EXIT_FAILURE);
-	printf("Server listening on port 12345\n");
+	printf("Server listening on port 8080\n");
 	if (listen(socket_fd, 5) < 0)
 		perror("listen failed"), exit(EXIT_FAILURE);
 	new_con = accept(socket_fd, (struct sockaddr *)&address, &addrlen);
 	if (new_con < 0)
 		perror("accept failed"), exit(EXIT_FAILURE);
 	printf("Client connected: %s\n", inet_ntoa(address.sin_addr));
-	while (wait)
-		wait = recv(new_con, buffer, 1024, 0);
-	printf("Message received: \"%s\"\n", buffer);
+	bytes = recv(new_con, buffer, 4096, 0);
+	if (bytes > 0)
+		printf("Raw request: \"%s\"\n", buffer);
 	close(new_con);
 	return (0);
 }
