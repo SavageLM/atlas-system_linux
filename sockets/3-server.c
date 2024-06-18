@@ -29,17 +29,18 @@ int main(void)
 	if (bind(socket_fd, (struct sockaddr *)&address, sizeof(address)) < 0)
 		perror("bind failed"), exit(EXIT_FAILURE);
 
-	printf("Big Brother Listening on Port 12345");
+	printf("Server listening on port 12345\n");
 	if (listen(socket_fd, 5) < 0)
 		perror("listen failed"), exit(EXIT_FAILURE);
 
 	new_con = accept(socket_fd, (struct sockaddr *)&address, &addrlen);
 	if (new_con < 0)
 		perror("accept failed"), exit(EXIT_FAILURE);
-	printf("IP address is: %s\n", inet_ntoa(address.sin_addr));
+	printf("Client connected: %s\n", inet_ntoa(address.sin_addr));
 
 	read(new_con, buffer, 1024 - 1);
+	printf("Message received: ");
 	printf("%s\n", buffer);
-	close(new_con), close (socket_fd);
+	close(new_con), close(socket_fd);
 	return (0);
 }
