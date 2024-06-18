@@ -40,7 +40,7 @@ int main(void)
 
 	read(new_con, buffer, 1024 - 1);
 	printf("Message received: ");
-	printf("%s\n", buffer);
+	printf("\"%s\"\n", buffer);
 	close(new_con), close(socket_fd);
 	return (0);
 }
