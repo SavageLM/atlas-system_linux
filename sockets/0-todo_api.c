@@ -7,6 +7,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+#define MESSAGE "HTTP 200 OK"
+
 /**
  * main - entry to the function
  * Return: 0 on success
@@ -15,7 +17,7 @@ int main(void)
 {
 	int socket_fd, new_con;
 	size_t bytes = 0;
-	char buffer[4096], meth[50], path[50], ver[50];
+	char buffer[4096], meth[50], path[50], ver[50], sent[16] = MESSAGE;
 	struct sockaddr_in address;
 	socklen_t addrlen = sizeof(address);
 
@@ -29,17 +31,21 @@ int main(void)
 	printf("Server listening on port 8080\n");
 	if (listen(socket_fd, 5) < 0)
 		perror("listen failed"), exit(EXIT_FAILURE);
-	new_con = accept(socket_fd, (struct sockaddr *)&address, &addrlen);
-	if (new_con < 0)
-		perror("accept failed"), exit(EXIT_FAILURE);
-	printf("Client connected: %s\n", inet_ntoa(address.sin_addr));
-	bytes = recv(new_con, buffer, 4096, 0);
-	if (bytes > 0)
+	while (1)
 	{
-		printf("Raw request: \"%s\"\n", buffer);
-		sscanf(buffer, "%s %s %s", meth, path, ver);
-		printf("Method: %s\nPath: %s\nVersion: %s\n", meth, path,ver);
+		new_con = accept(socket_fd, (struct sockaddr *)&address, &addrlen);
+		if (new_con < 0)
+			perror("accept failed"), exit(EXIT_FAILURE);
+		printf("Client connected: %s\n", inet_ntoa(address.sin_addr));
+		bytes = recv(new_con, buffer, 4096, 0);
+		if (bytes > 0)
+		{
+			printf("Raw request: \"%s\"\n", buffer);
+			sscanf(buffer, "%s %s %s", meth, path, ver);
+			printf("Method: %s\nPath: %s\nVersion: %s\n", meth, path,ver);
+		}
+		send(new_con, sent, sizeof(sent), 0);
+		close(new_con);
 	}
-	close(new_con);
 	return (0);
 }

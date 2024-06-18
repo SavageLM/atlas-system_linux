@@ -22,5 +22,4 @@ todo_api_5: $(5)
 	$(CC) $(CFLAGS) 5-todo_api.c -o todo_api_5
 
 clean:
-	rm -f *todo_api_*
-	rm -f *.o
+	rm -f todo_api_*
