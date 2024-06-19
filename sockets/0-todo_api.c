@@ -42,7 +42,8 @@ int main(void)
 		{
 			printf("Raw request: \"%s\"\n", buffer), fflush(stdout);
 			sscanf(buffer, "%s %s %s", meth, path, ver);
-			printf("Method: %s\nPath: %s\nVersion: %s\n", meth, path,ver), fflush(stdout);
+			printf("Method: %s\nPath: %s\nVersion: %s\n", meth, path, ver);
+			fflush(stdout);
 		}
 		send(new_con, sent, sizeof(sent), 0);
 		close(new_con);

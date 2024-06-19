@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define MESSAGE "200 OK"
+#define MESSAGE "HTTP/1.1 200 OK\r\n\r\n"
 
 /**
  * main - entry to the function
@@ -17,8 +17,8 @@ int main(void)
 {
 	int socket_fd, new_con;
 	size_t bytes = 0;
-	char buffer[4096], meth[50], path[50], sent[16] = MESSAGE;
-	char key1[50], val1[50], key2[50], val2[50];
+	char buffer[4096], meth[50], path[50], sent[32] = MESSAGE;
+	char key1[50], val1[50], key2[50], val2[10], no_use[50];
 	struct sockaddr_in address;
 	socklen_t addrlen = sizeof(address);
 
@@ -42,8 +42,8 @@ int main(void)
 		if (bytes > 0)
 		{
 			printf("Raw request: \"%s\"\n", buffer), fflush(stdout);
-			sscanf(buffer, "%s %s?%s=%s&%s=%s", meth, path,
-				   key1, val1, key2, val2);
+			sscanf(buffer, "%s %[^?]? %[^=]= %[^&]& %[^=]= %[^&]& %s",
+				   meth, path, key1, val1, key2, val2, no_use);
 			printf("Path: %s\nQuery: \"%s\" -> \"%s\"\n", path, key1, val1);
 			printf("Query: \"%s\" -> \"%s\"\n",  key2, val2);
 		}
