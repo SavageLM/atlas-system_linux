@@ -69,5 +69,7 @@ void query_parser(char *query)
 	{
 		if (sscanf(headers[i],"%[^:]:%s", key, val) > 0)
 			printf("Header: \"%s\" -> \"%s\"\n", key, val), fflush(stdout);
+		else
+			break;
 	}
 }
