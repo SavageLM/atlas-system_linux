@@ -33,8 +33,8 @@ int main(int argc, const char **argv)
 	if (host == NULL)
 		perror("host not found"), exit(EXIT_FAILURE);
 	hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_protocol = IPPROTO_TCP;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_protocol = IPPROTO_TCP;
 	if (getaddrinfo(argv[1], argv[2], &hints, &addrs) != 0)
 		perror("Failed to get address info"), exit(EXIT_FAILURE);
 	for (tmp = addrs; tmp != NULL; tmp = tmp->ai_next)
@@ -47,7 +47,8 @@ int main(int argc, const char **argv)
 		server_add.sin_port = htons(atoi(argv[2]));
 		inet_ntop(AF_INET, &(address->sin_addr), ip, INET_ADDRSTRLEN);
 		server_add.sin_addr.s_addr = inet_addr(ip);
-		if (connect(client_fd, (struct sockaddr *) &server_add, sizeof(struct sockaddr_in)) < 0)
+		if (connect(client_fd, (struct sockaddr *) &server_add,
+					sizeof(struct sockaddr_in)) < 0)
 			perror("Failed to Connect\n"), exit(EXIT_FAILURE);
 		printf("Connected to %s:%s\n", argv[1], argv[2]);
 		close(client_fd);
