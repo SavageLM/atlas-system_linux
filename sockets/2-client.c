@@ -21,9 +21,10 @@
 int main(int argc, const char **argv)
 {
 	int client_fd;
-	/* struct sockaddr_in server_add; */
+	struct sockaddr_in server_add, *address;
 	struct hostent *host;
 	struct addrinfo hints = {0}, *addrs, *tmp = NULL;
+	char ip[16] = {0};
 
 	if (argc < 3)
 		printf("Usage: %s <host> <port>\n", argv[0]), exit(EXIT_FAILURE);
@@ -31,20 +32,26 @@ int main(int argc, const char **argv)
 	host = gethostbyname(argv[1]);
 	if (host == NULL)
 		perror("host not found"), exit(EXIT_FAILURE);
-	hints.ai_family = AF_UNSPEC;
+	hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
 	if (getaddrinfo(argv[1], argv[2], &hints, &addrs) != 0)
 		perror("Failed to get address info"), exit(EXIT_FAILURE);
 	for (tmp = addrs; tmp != NULL; tmp = tmp->ai_next)
 	{
-		client_fd = socket(addrs->ai_family, addrs->ai_socktype, addrs->ai_protocol);
-	if (client_fd == -1)
-		perror("socket failed"), exit(EXIT_FAILURE);
-	if (connect(client_fd, tmp->ai_addr, tmp->ai_addrlen) < 0)
-		perror("Failed to Connect\n"), exit(EXIT_FAILURE);
-	printf("Big Brother is in your walls now...\n");
-	close(client_fd);
+		address = (struct sockaddr_in *)tmp->ai_addr;
+		client_fd = socket(hints.ai_family, hints.ai_socktype, 0);
+		if (client_fd == -1)
+			perror("socket failed"), exit(EXIT_FAILURE);
+		server_add.sin_family = AF_INET;
+		server_add.sin_port = htons(atoi(argv[2]));
+		inet_ntop(AF_INET, &(address->sin_addr), ip, INET_ADDRSTRLEN);
+		server_add.sin_addr.s_addr = inet_addr(ip);
+		if (connect(client_fd, (struct sockaddr *) &server_add, sizeof(struct sockaddr_in)) < 0)
+			perror("Failed to Connect\n"), exit(EXIT_FAILURE);
+		printf("Connected to %s:%s\n", argv[1], argv[2]);
+		close(client_fd);
+		break;
 	}
 	freeaddrinfo(addrs);
 	return (0);
