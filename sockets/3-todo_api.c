@@ -80,7 +80,6 @@ void query_parser(char *query)
 	int i = 0, flag = 0;
 	char *token = NULL, *key_vals[16] = {0}, key[50], val[50];
 
-	printf("Made it to Query Parser\nQuery is: %s\n", query);
 	do {
 		token = strsep(&query, "&");
 		if (token && token[0])
