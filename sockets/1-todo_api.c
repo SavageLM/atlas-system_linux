@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #define MESSAGE "HTTP/1.1 200 OK\r\n\r\n"
+void query_parser(char *query);
 
 /**
  * main - entry to the function
@@ -17,8 +18,7 @@ int main(void)
 {
 	int socket_fd, new_con;
 	size_t bytes = 0;
-	char buffer[4096], meth[50], path[50], sent[32] = MESSAGE;
-	char key1[50], val1[50], key2[50], val2[10], no_use[50];
+	char buffer[4096], meth[50], path[50], query[255], sent[32] = MESSAGE;
 	struct sockaddr_in address;
 	socklen_t addrlen = sizeof(address);
 
@@ -42,13 +42,34 @@ int main(void)
 		if (bytes > 0)
 		{
 			printf("Raw request: \"%s\"\n", buffer), fflush(stdout);
-			sscanf(buffer, "%s %[^?]? %[^=]= %[^&]& %[^=]= %[^&]& %s",
-				   meth, path, key1, val1, key2, val2, no_use);
-			printf("Path: %s\nQuery: \"%s\" -> \"%s\"\n", path, key1, val1);
-			printf("Query: \"%s\" -> \"%s\"\n",  key2, val2);
+			sscanf(buffer, "%s %[^?]?%s", meth, path, query);
+			printf("Path: %s\n", path), fflush(stdout);
+			query_parser(query);
 		}
 		send(new_con, sent, sizeof(sent), 0);
 		close(new_con);
 	}
 	return (0);
+}
+
+/**
+ * query_parser - pares an http query
+ * @query: query string to parse
+*/
+void query_parser(char *query)
+{
+	int i = 0, flag = 0;
+	char *token = NULL, *key_vals[16] = {0}, key[50], val[50];
+
+	do {
+		token = strsep(&query, "&");
+		if (token && token[0])
+			key_vals[i++] = token, flag = 1;
+	} while (token && flag--);
+
+	for (i = 0; key_vals[i]; i++)
+	{
+		sscanf(key_vals[i],"%[^=]=%s", key, val);
+		printf("Query: \"%s\" -> \"%s\"\n", key, val), fflush(stdout);
+	}
 }
