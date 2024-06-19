@@ -89,6 +89,6 @@ void query_parser(char *query)
 	for (i = 0; key_vals[i]; i++)
 	{
 		sscanf(key_vals[i],"%[^=]=%s", key, val);
-		printf("Body: \"%s\" -> \"%s\"\n", key, val), fflush(stdout);
+		printf("Body param: \"%s\" -> \"%s\"\n", key, val), fflush(stdout);
 	}
 }
