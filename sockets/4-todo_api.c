@@ -156,20 +156,23 @@ void add_todo(char *desc, char *title, int fd)
 	id++;
 	if (!list)
 		list = new_todo;
-	tmp = list;
-	for (; tmp; tmp = tmp->next)
-		{
-			if (tmp->next == NULL)
+	else
+	{
+		tmp = list;
+		for (; tmp; tmp = tmp->next)
 			{
-				tmp->next = new_todo;
-				break;
+				if (tmp->next == NULL)
+				{
+					tmp->next = new_todo;
+					break;
+				}
 			}
-		}
+	}
 		sprintf(buffer, "{\"id\":%lu,\"title\":\"%s\",\"description\":\"%s\"}",
-				id, title, desc);
+				new_todo-> id, title, desc);
 		len = strlen(buffer);
 		printf("%s\n", buffer), fflush(stdout);
 		dprintf(fd, "%s", STAT_201), dprintf(fd,"Content-Length: %d\r\n", len);
-		dprintf(fd, "Content-Type: application/json");
+		dprintf(fd, "Content-Type: application/json\r\n\r\n");
 		dprintf(fd, "%s", buffer);
 }
