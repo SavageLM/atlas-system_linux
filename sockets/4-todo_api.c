@@ -1,15 +1,6 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
+#include "sockets.h"
 
-#define MESSAGE "HTTP/1.1 200 OK\r\n\r\n"
-void query_parser(char *query);
-void body_parser(char *query);
+todo_t *list = NULL;
 
 /**
  * main - entry to the function
@@ -19,7 +10,7 @@ int main(void)
 {
 	int socket_fd, new_con;
 	size_t bytes = 0;
-	char buffer[4096], path[50], sent[32] = MESSAGE;
+	char buffer[4096];
 	struct sockaddr_in address;
 	socklen_t addrlen = sizeof(address);
 
@@ -43,43 +34,81 @@ int main(void)
 		if (bytes > 0)
 		{
 			printf("Raw request: \"%s\"\n", buffer), fflush(stdout);
-			sscanf(buffer, "%*s %s", path);
-			printf("Path: %s\n", path), fflush(stdout);
-			body_parser(buffer);
+			process_req(buffer, new_con);
 		}
-		send(new_con, sent, sizeof(sent), 0);
 		close(new_con);
 	}
 	return (0);
 }
 
 /**
- * body_parser - pares an http query
+ * process_req - processes a request
+ * @request: request to process
+ * @fd: file descriptor for socket connection
+ */
+void process_req(char *request, int fd)
+{
+	char meth[50], path[50];
+
+	printf("Entering process_req\n");
+	sscanf(request, "%s %s", meth, path);
+	if (strcmp(meth, "POST") != 0 && strcmp(meth, "GET") != 0)
+		{
+			send(fd, STAT_404, sizeof(STAT_404), 0);
+			return;
+		}
+	if (strcmp(path, "/todos") != 0)
+	{
+		send(fd, STAT_404, strlen(STAT_404), 0);
+		return;
+	}
+	head_parser(request, fd);
+}
+
+/**
+ * head_parser - pares an http query
  * @query: query string to parse
-*/
-void body_parser(char *query)
+ * @fd: file descriptor for socket connection
+ */
+void head_parser(char *query, int fd)
 {
 	int i = 0, flag = 0;
-	char *token = NULL, *lines[16] = {0}, *body = NULL;
+	char *token = NULL, *lines[16] = {0}, *body = NULL, key[50], val[50];
 
+	printf("Entering head_parser\n");
 	do {
 		token = strsep(&query, "\r\n");
 		if (token)
 			lines[i++] = token, flag = 1;
 	} while (token && flag--);
 
-	body = lines[i - 1]; query_parser(body);
+	body = lines[i - 1];
+	for (i = 1; lines[i]; i++)
+	{
+		sscanf(lines[i],"%[^:]:%s", key, val);
+		if (strcmp(key, "Content-Length") == 0)
+			flag = 1;
+	}
+	if (!flag)
+	{
+		send(fd, STAT_411, strlen(STAT_411), 0);
+		return;
+	}
+	printf("%s\n", body);
+	task_parser(body, fd);
 }
 
 /**
- * query_parser - pares an http query
+ * task_parser - pares an http query
  * @query: query string to parse
+ * @fd: file descriptor for socket connection
 */
-void query_parser(char *query)
+void task_parser(char *query, int fd)
 {
-	int i = 0, flag = 0;
-	char *token = NULL, *key_vals[16] = {0}, key[50], val[50];
+	int i = 0, flag = 0, flag_k = 1, flag_d = 1;
+	char *token = NULL, *key_vals[16] = {0}, key[50], val[50], *title, *desc;
 
+	printf("Entering task_parser\n");
 	do {
 		token = strsep(&query, "&");
 		if (token && token[0])
@@ -89,6 +118,58 @@ void query_parser(char *query)
 	for (i = 0; key_vals[i]; i++)
 	{
 		sscanf(key_vals[i],"%[^=]=%s", key, val);
-		printf("Body param: \"%s\" -> \"%s\"\n", key, val), fflush(stdout);
+		if (strcmp(key, "title") == 0)
+			title = strdup(val), flag_k = 0;
+		else if (strcmp(key, "description") == 0)
+			desc = strdup(val), flag_d = 0;
 	}
+	if (flag_k && flag_d)
+	{
+		send(fd, STAT_422, strlen(STAT_422), 0);
+		return;
+	}
+	printf("title:%s\ndesc:%s\n",title, desc);
+	add_todo(desc, title, fd);
+}
+
+/**
+ * add_todo - FUnction to add to the todo list
+ * @desc: description of task
+ * @title: title of task
+ * @fd: file descriptor for socket connection
+ */
+void add_todo(char *desc, char *title, int fd)
+{
+	static size_t id;
+	int len = 0;
+	char buffer[1024];
+	todo_t *new_todo = NULL, *tmp;
+
+	printf("Entering add_todo\n");
+	new_todo = calloc(1, sizeof(todo_t));
+	if (!new_todo)
+		return;
+	new_todo->id = id;
+	new_todo->title = strdup(title);
+	new_todo->description = strdup(desc);
+	new_todo->next = NULL;
+	id++;
+	if (!list)
+		list = new_todo;
+	tmp = list;
+	for (; tmp; tmp = tmp->next)
+		{
+			if (tmp->next == NULL)
+			{
+				tmp->next = new_todo;
+				break;
+			}
+		}
+		sprintf(buffer, "{\"id\":%lu,\"title\":\"%s\",\"description\":\"%s\"}",
+				id, title, desc);
+		len = strlen(buffer);
+		printf("%s\n", buffer), fflush(stdout);
+		dprintf(fd, "%s", STAT_201), dprintf(fd,"Content-Length: %d\r\n", len);
+		dprintf(fd, "Content-Type: application/json");
+		dprintf(fd, "%s", buffer);
 }
