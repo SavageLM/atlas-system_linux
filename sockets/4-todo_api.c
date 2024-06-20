@@ -53,10 +53,10 @@ void process_req(char *request, int fd)
 	printf("Entering process_req\n");
 	sscanf(request, "%s %s", meth, path);
 	if (strcmp(meth, "POST") != 0 && strcmp(meth, "GET") != 0)
-		{
-			send(fd, STAT_404, sizeof(STAT_404), 0);
-			return;
-		}
+	{
+		send(fd, STAT_404, sizeof(STAT_404), 0);
+		return;
+	}
 	if (strcmp(path, "/todos") != 0)
 	{
 		send(fd, STAT_404, strlen(STAT_404), 0);
@@ -85,7 +85,7 @@ void head_parser(char *query, int fd)
 	body = lines[i - 1];
 	for (i = 1; lines[i]; i++)
 	{
-		sscanf(lines[i],"%[^:]:%s", key, val);
+		sscanf(lines[i], "%[^:]:%s", key, val);
 		if (strcmp(key, "Content-Length") == 0)
 			flag = 1;
 	}
@@ -117,7 +117,7 @@ void task_parser(char *query, int fd)
 
 	for (i = 0; key_vals[i]; i++)
 	{
-		sscanf(key_vals[i],"%[^=]=%s", key, val);
+		sscanf(key_vals[i], "%[^=]=%s", key, val);
 		if (strcmp(key, "title") == 0)
 			title = strdup(val), flag_k = 0;
 		else if (strcmp(key, "description") == 0)
@@ -128,7 +128,7 @@ void task_parser(char *query, int fd)
 		send(fd, STAT_422, strlen(STAT_422), 0);
 		return;
 	}
-	printf("title:%s\ndesc:%s\n",title, desc);
+	printf("title:%s\ndesc:%s\n", title, desc);
 	add_todo(desc, title, fd);
 }
 
@@ -160,19 +160,19 @@ void add_todo(char *desc, char *title, int fd)
 	{
 		tmp = list;
 		for (; tmp; tmp = tmp->next)
+		{
+			if (tmp->next == NULL)
 			{
-				if (tmp->next == NULL)
-				{
-					tmp->next = new_todo;
-					break;
-				}
+				tmp->next = new_todo;
+				break;
 			}
+		}
 	}
 		sprintf(buffer, "{\"id\":%lu,\"title\":\"%s\",\"description\":\"%s\"}",
-				new_todo-> id, title, desc);
+				new_todo->id, title, desc);
 		len = strlen(buffer);
 		printf("%s\n", buffer), fflush(stdout);
-		dprintf(fd, "%s", STAT_201), dprintf(fd,"Content-Length: %d\r\n", len);
+		dprintf(fd, "%s", STAT_201), dprintf(fd, "Content-Length: %d\r\n", len);
 		dprintf(fd, "Content-Type: application/json\r\n\r\n");
 		dprintf(fd, "%s", buffer);
 }
